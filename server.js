@@ -7,7 +7,6 @@ const port = 5000;
 // ROUTES
 
 app.get('/', (req, res) => {
-  console.log("test");
   res.send("Hello!")
 })
 
