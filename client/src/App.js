@@ -8,19 +8,22 @@ import SideNav from './components/SideNav';
 
 function App() {
   return (
+
     <div className="App">
-    <SideNav></SideNav>
+    <div className="styles">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    </div>
+
     <Router>
       <Route path="/" exact component={Login} />
+      <Route path="/Map" exact component={SideNav}/>
       <Route path="/Map" exact component={Map} />
     </Router>
 
       <div className="imports">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"/>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
-        
       </div>
     </div>
   );

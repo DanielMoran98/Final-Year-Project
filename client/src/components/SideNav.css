@@ -1,0 +1,21 @@
+
+nav{
+    position:fixed;
+    z-index:5 !important;
+    -webkit-box-shadow:0 0 0 0 !important;
+    box-shadow:0 0 0 0 !important;
+    background: rgb(0,0,0);
+    background: linear-gradient(180deg, rgba(0,0,0,0.2805497198879552) 0%, rgba(9,85,121,0) 100%);
+}
+.blue-icon{
+    color: #039be5 !important;
+}
+
+.userName{
+    color:black;
+    font-size: 2rem;
+}
+
+.sidenav-trigger i{
+    font-size:32px !important;
+}
