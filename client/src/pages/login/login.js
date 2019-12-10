@@ -1,5 +1,12 @@
 import React from 'react';
-import './login.css';
+import './Login.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch
+} from "react-router-dom";
 
 function Login() {
   return (
@@ -23,12 +30,14 @@ function Login() {
               <label className="active" for="passwordField">Garda Password</label>
             </div>
           </div>
-          <button className="btn">Login</button>
+          <Link to="/map">
+            <button className="btn">Login</button>
+          </Link>
         </div>
       </div>
       <div className ="col l3"></div>
 
-
+      
        <div className="background">
          <img src="/images/gardaBackground.jpg"  alt="background"/>
        </div>
