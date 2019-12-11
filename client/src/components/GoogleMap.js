@@ -12,7 +12,8 @@ function createMapOptions(maps) {
   // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
   // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
   return {
-    disableDefaultUI: true
+    disableDefaultUI: true,
+    gestureHandling:"greedy"
   };
 }
 
