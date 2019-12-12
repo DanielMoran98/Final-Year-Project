@@ -17,7 +17,6 @@ function App() {
 
     <Router>
       <Route path="/" exact component={Login} />
-      <Route path="/Map" exact component={SideNav}/>
       <Route path="/Map" exact component={Map} />
     </Router>
 
