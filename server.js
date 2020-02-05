@@ -3,6 +3,12 @@ const express = require('express');
 const app = express();
 const port = 5000;
 
+//
+
+require('dotenv').config() //Load the variables from our local environment
+
+
+
 
 // ROUTES
 
