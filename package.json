@@ -24,7 +24,8 @@
     "express": "^4.17.1",
     "materialize-css": "^1.0.0",
     "mysql": "^2.18.1",
-    "react-router-dom": "^5.1.2"
+    "react-router-dom": "^5.1.2",
+    "sqlstring": "^2.3.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.1"
