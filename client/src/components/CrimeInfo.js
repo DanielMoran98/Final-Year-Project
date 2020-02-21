@@ -9,16 +9,17 @@ export class CrimeInfo extends Component {
         return (
             <div>
                 <div className="row">
-                    <div class="col s12 m6">
-                    <div className="card z-depth-5" >
+                    <div className="col s12 m6">
+                    <div className="card z-depth-5" style={{minWidth: "500px"}} >
                         <div className="card-image" style={{height: "20%"}}>
                         <ul style={{position: "absolute", zIndex: "5", left: "15px"}}>
                             <li>
-                              <a href="#"><i class="material-icons" style={{fontSize: "45px"}}>close</i></a>
+                             <a className="btn-floating btn-large waves-effect waves-light white"><i className="material-icons" style={{color:"black", fontSize: "45px"}}>arrow_back</i></a>
                             </li>
                         </ul>
                         {/* <img src="images/gardaBackground.jpg"/> */}
-                        <GoogleMap height="30vh"/>
+                        {/* <GoogleMap height="30vh"/> */}
+                        {/* Should this be a GoogleMapReact^^^ ? */}
                         <span className="card-title" style={{color: "black", fontWeight:500, fontSize:"2.4rem"}}>Crime Info</span>
                         </div>
                         <div className="card-content">

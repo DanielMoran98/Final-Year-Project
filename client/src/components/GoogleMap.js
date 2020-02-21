@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker"
+import CrimeInfo from './CrimeInfo';
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 
@@ -33,6 +34,18 @@ class GoogleMap extends Component {
     ]
   };
 
+  createMapOptions(maps) {
+    // next props are exposed at maps
+    // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
+    // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
+    // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
+    // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
+    // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
+    return {
+      disableDefaultUI: true,
+      gestureHandling:"greedy"
+    };
+  }
   async componentDidMount(){
     const url = "/api/crime/all";
     const response = await fetch(url);
@@ -103,6 +116,9 @@ class GoogleMap extends Component {
           />
 
         </GoogleMapReact>
+        <div style={{position:"fixed", top:"50px", left:"30%", zIndex:"5"}}><CrimeInfo/></div>
+          
+
       </div>
     );
   }
