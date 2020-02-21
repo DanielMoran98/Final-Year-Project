@@ -5,7 +5,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './pages/login/Login';
 import Map from './pages/map/Map';
 import SideNav from './components/SideNav';
-
+import CrimeInfo from './components/CrimeInfo';
 function App() {
   return (
 
@@ -18,6 +18,7 @@ function App() {
     <Router>
       <Route path="/" exact component={Login} />
       <Route path="/map" exact component={Map} />
+      <Route path="/test" exact component={CrimeInfo} />
     </Router>
 
       <div className="imports">

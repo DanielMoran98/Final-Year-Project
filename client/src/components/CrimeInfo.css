@@ -1,0 +1,8 @@
+#crimeInfoTable {
+    display: block !important;
+  }
+  
+  #crimeInfoTable td {
+    display: inline-block !important;
+  }
+  
