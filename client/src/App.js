@@ -17,12 +17,13 @@ function App() {
 
     <Router>
       <Route path="/" exact component={Login} />
-      <Route path="/Map" exact component={Map} />
+      <Route path="/map" exact component={Map} />
     </Router>
 
       <div className="imports">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+        {console.log("Imported")}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ class Marker extends Component {
   constructor(props){
       super(props);
       this.state = {
+          id: props.id,
           color: props.color
       };
   }

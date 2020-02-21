@@ -21,13 +21,13 @@ function Login() {
           <div className="row">
             <div className="input-field">
               <input id="emailField" type="email" className="validate"/>
-              <label className="active" for="emailField">Garda Email</label>
+              <label className="active" htmlFor="emailField">Garda Email</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field">
               <input id="passwordField" type="password" className="validate"/>
-              <label className="active" for="passwordField">Garda Password</label>
+              <label className="active" htmlFor="passwordField">Garda Password</label>
             </div>
           </div>
           <Link to="/map">
