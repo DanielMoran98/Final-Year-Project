@@ -9,8 +9,8 @@ export class CrimeInfo extends Component {
         return (
             <div>
                 <div className="row">
-                    <div className="col s12 m6">
-                    <div className="card z-depth-5" style={{minWidth: "500px"}} >
+                    <div className="col s12 m6" style={{width: "100%"}}>
+                    <div className="card z-depth-5" style={{}} >
                         <div className="card-image" style={{height: "20%"}}>
                         <ul style={{position: "absolute", zIndex: "5", left: "15px"}}>
                             <li>

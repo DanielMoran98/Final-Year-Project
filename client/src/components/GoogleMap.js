@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker"
 import CrimeInfo from './CrimeInfo';
+import M from 'materialize-css';
+
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 
@@ -60,11 +62,27 @@ class GoogleMap extends Component {
     var newMarkers = this.state.markers.slice();
     for(var i = 0; i < data.length ; i++){
       console.log(data[i].id)
+      var newColor = ""
+      switch (data[i].urgency) {
+        case 1:
+          newColor = "green";
+          break;
+        case 2:
+          newColor = "yellow";
+          break;
+        case 3:
+          newColor = "orange";
+          break;
+        case 4:
+          newColor = "red";
+          break;
+
+      }
       var marker = {
         id: data[i].id,
         lat: data[i].latitude,
         lng: data[i].longitude,
-        color: "red"
+        color: newColor
       }
       //Push each object to the array
       newMarkers.push(marker);
@@ -76,7 +94,10 @@ class GoogleMap extends Component {
   }
   render() {
 
+    if (this.state.markers.length > 0) {
+
     return (
+      
       // Important! Always set the container height explicitly
       <div style={{ height: this.props.height, width: '100%' }}>
         <GoogleMapReact
@@ -85,42 +106,49 @@ class GoogleMap extends Component {
           defaultZoom={this.props.zoom}
           options={createMapOptions}  
         >
-          
-          {/* Here Im trying to access the array from the jsx */}
-          {console.log("Markers        "+ JSON.stringify(this.state.markers))}
-          {console.log("Markers[0]     "+ JSON.stringify(this.state.markers[0]))}
-          {console.log("Markers[1]     "+ JSON.stringify(this.state.markers[1]))}
-
-          {/* {console.log("Markers[1].id  "+ JSON.stringify(this.state))} */}
+        
 
 
+          {/* Populate map with markers from API / State */}
+          {this.state.markers.map(i => {
+              return <Marker id={i.id} lat={i.lat} lng={i.lng} color={i.color} />
+             
+            })}
 
           {/* Some hardcoded Markers for now */}
           <Marker
-          id={1}
+          id={2}
           lat={53.352}
           lng={-6.264}
           color="green"
           />
           <Marker
-          id={2}
+          id={3}
           lat={53.3512}
           lng={-6.26234}
           color="red"
           />
           <Marker
-          id={3}
+          id={4}
           lat={53.354}
           lng={-6.2632}
           color="orange"
           />
 
         </GoogleMapReact>
-        <div style={{position:"fixed", top:"50px", left:"30%", zIndex:"5"}}><CrimeInfo/></div>
+   
+
+        {/* <div className="col s10 m6 offset-s1 offset-m3" style={{display:"block",position:"absolute", top:"15px", zIndex:"5", left:"0", right:"0"}} className="center-align">
+          <CrimeInfo/>
+        </div> */}
+
           
 
       </div>
     );
+  } else {
+    return <div>LOADING</div> 
+  }
   }
 }
 
