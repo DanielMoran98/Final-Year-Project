@@ -1,0 +1,37 @@
+✔ Create a TODO @done(20-02-21 17:53)
+
+API:
+    ✔ Setup /crime/all API @done(20-02-21 17:51)
+    ☐ Login system
+        ☐ Password encryption
+    ☐ Implement JSON Web Tokens
+
+Client:
+    Components:
+        App:
+        GoogleMap:
+            ☐ Show current location
+        Marker:
+            ☐ Display correct CrimeInfo on click
+        CrimeInfo:
+            ☐ Populate fields with API data
+            ☐ Back button
+            ☐ Attend Button Functionality
+            ☐ Create Report Functionality
+            ☐ Mark Resolved Functionality
+        SideNav:
+            ☐ My reports - Filter reports by user
+            ☐ Information - Dialog box explaining system
+            ☐ Settings - None for now
+            ☐ End Patrol - Logout, disband unit
+        Report:
+            ☐ Create Report dialog component
+        NewCrime:
+            ☐ Create crime dialog component
+    Pages:
+        Unit:
+            ☐ Create/Join units post-login
+Bugs:
+    ☐ SideNav button only working on refresh
+    
+Archive:
