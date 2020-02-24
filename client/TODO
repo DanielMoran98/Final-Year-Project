@@ -27,7 +27,9 @@ Client:
         Report:
             ☐ Create Report dialog component
         NewCrime:
-            ☐ Create crime dialog component
+            ✔ Create crime dialog component @done(20-02-24 00:17)
+            ☐ Connect crime dialog component to API
+            ✔ Implement React Portals @done(20-02-24 00:17)
     Pages:
         Unit:
             ☐ Create/Join units post-login

@@ -53,39 +53,38 @@ class GoogleMap extends Component {
     const response = await fetch(url);
     const data = await response.json();
     console.log(data)
-    // console.log(data[0].id)
-    // console.log(data[0].longitude)
-    // console.log(data[0].latitude)
-    // console.log(data.length)
+
     
     //Create a copy of the current markers array
     var newMarkers = this.state.markers.slice();
     for(var i = 0; i < data.length ; i++){
       console.log(data[i].id)
-      var newColor = ""
-      switch (data[i].urgency) {
-        case 1:
-          newColor = "green";
-          break;
-        case 2:
-          newColor = "yellow";
-          break;
-        case 3:
-          newColor = "orange";
-          break;
-        case 4:
-          newColor = "red";
-          break;
+      if(data[i].status == "active"){
+        var newColor = ""
+        switch (data[i].urgency) {
+          case 1:
+            newColor = "green";
+            break;
+          case 2:
+            newColor = "yellow";
+            break;
+          case 3:
+            newColor = "orange";
+            break;
+          case 4:
+            newColor = "red";
+            break;
 
+        }
+        var marker = {
+          id: data[i].id,
+          lat: data[i].latitude,
+          lng: data[i].longitude,
+          color: newColor
+        }
+        //Push each object to the array
+        newMarkers.push(marker);
       }
-      var marker = {
-        id: data[i].id,
-        lat: data[i].latitude,
-        lng: data[i].longitude,
-        color: newColor
-      }
-      //Push each object to the array
-      newMarkers.push(marker);
     }
 
     // Update the state with the new array
