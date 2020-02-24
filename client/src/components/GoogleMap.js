@@ -114,25 +114,6 @@ class GoogleMap extends Component {
              
             })}
 
-          {/* Some hardcoded Markers for now */}
-          <Marker
-          id={2}
-          lat={53.352}
-          lng={-6.264}
-          color="green"
-          />
-          <Marker
-          id={3}
-          lat={53.3512}
-          lng={-6.26234}
-          color="red"
-          />
-          <Marker
-          id={4}
-          lat={53.354}
-          lng={-6.2632}
-          color="orange"
-          />
 
         </GoogleMapReact>
    

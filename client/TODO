@@ -6,16 +6,19 @@ API:
         ☐ Password encryption
     ☐ Implement JSON Web Tokens
 
+Database:
+    ✔ Update default values for crime table values @done(20-02-24 00:48)
+
 Client:
     Components:
         App:
         GoogleMap:
             ☐ Show current location
         Marker:
-            ☐ Display correct CrimeInfo on click
+            ✔ Display correct CrimeInfo on click @done(20-02-24 00:48)
         CrimeInfo:
             ☐ Populate fields with API data
-            ☐ Back button
+            ✔ Back button @done(20-02-24 01:39)
             ☐ Attend Button Functionality
             ☐ Create Report Functionality
             ☐ Mark Resolved Functionality
@@ -28,12 +31,12 @@ Client:
             ☐ Create Report dialog component
         NewCrime:
             ✔ Create crime dialog component @done(20-02-24 00:17)
-            ☐ Connect crime dialog component to API
+            ✔ Connect crime dialog component to API @done(20-02-24 00:46)
             ✔ Implement React Portals @done(20-02-24 00:17)
     Pages:
         Unit:
             ☐ Create/Join units post-login
 Bugs:
     ☐ SideNav button only working on refresh
-    
+    ☐ React portal now moves marker to root along with the crime-dialog modal
 Archive:
