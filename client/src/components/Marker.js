@@ -37,10 +37,10 @@ class Marker extends Component {
 
       return ReactDOM.createPortal(
         <div className="markerContainer">
-            <a href="#" onClick={() => this.openCrimeDialog()}><img src={"/images/markers/pin-"+this.state.color+".png"} style={{backgroundcolor: this.props.color}} height="24px"/></a>
+            {/* <a href="#" onClick={() => this.openCrimeDialog()}><img src={"/images/markers/pin-"+this.state.color+".png"} style={{backgroundcolor: this.props.color}} height="24px"/></a> */}
             <div className="col s10 m6 offset-s1 offset-m3" style={{display:"block",position:"absolute", top:"15px", zIndex:"5", left:"0", right:"0"}} className="center-align">
 
-              <CrimeInfo id={this.props.id} closeCrimeDialog={this.closeCrimeDialog} />
+              <CrimeInfo id={this.props.id} color={this.props.color} closeCrimeDialog={this.closeCrimeDialog} />
             </div>
         </div>
      ,

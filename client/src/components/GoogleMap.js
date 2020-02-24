@@ -36,18 +36,7 @@ class GoogleMap extends Component {
     ]
   };
 
-  createMapOptions(maps) {
-    // next props are exposed at maps
-    // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
-    // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
-    // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
-    // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
-    // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
-    return {
-      disableDefaultUI: true,
-      gestureHandling:"greedy"
-    };
-  }
+
   async componentDidMount(){
     const url = "/api/crime/all";
     const response = await fetch(url);
@@ -103,7 +92,12 @@ class GoogleMap extends Component {
           bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
-          options={createMapOptions}  
+          options={
+            {    
+              disableDefaultUI: true,
+              gestureHandling:"greedy"
+            }
+          }  
         >
         
 

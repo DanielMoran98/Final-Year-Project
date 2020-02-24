@@ -34,7 +34,7 @@ class Map extends Component {
               <div className="footercolumns col l6 "> */}
                 <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
                 <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
-                <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Notes</span></div>
+                <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
               {/* </div> */}
             {/* <div className="col l3"></div> */}
             <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

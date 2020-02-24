@@ -3,10 +3,33 @@ import ReactDOM from 'react-dom'
 import './SideNav.css'
 import GoogleMapReact from 'google-map-react'
 import GoogleMap from './GoogleMap.js'
+import Marker from './Marker.js'
 import M from 'materialize-css';
 
-export class CrimeInfo extends Component {
 
+function createMapOptions(maps) {
+    // next props are exposed at maps
+    // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
+    // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
+    // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
+    // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
+    // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
+    return {
+      disableDefaultUI: true,
+      gestureHandling:"greedy"
+    };
+  }
+  
+
+export class CrimeInfo extends Component {
+    static defaultProps = {
+        center: {
+          lat: 53.35,
+          lng: -6.26
+        },
+        zoom: 13,
+        height: "100vh",
+      };
     state = {
         id: null,
         latitude: null,
@@ -23,6 +46,7 @@ export class CrimeInfo extends Component {
         division_id: null,
         dataLoaded: false
     }
+
 
     async componentDidMount(){
         const url = "/api/crime/"+this.props.id;
@@ -54,6 +78,8 @@ export class CrimeInfo extends Component {
     }
 
     render() {
+
+        
         if(this.state.dataLoaded){
             return (
                 <div>
@@ -67,9 +93,26 @@ export class CrimeInfo extends Component {
                                 </li>
                             </ul>
                             {/* <img src="images/gardaBackground.jpg"/> */}
-                            {/* <GoogleMap height="30vh"/> */}
+                            <img src="images/blue-box.svg" style={{maxHeight: "20vh"}}/>
+{/*                             <
+                            <GoogleMapReact 
+                                      bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
+                                      defaultCenter={
+                                          {
+                                              lat: this.state.latitude,
+                                             lng:this.state.longitude
+                                         }
+                                        }
+                                      defaultZoom={13}
+                                      options={{    disableDefaultUI: true,
+                                        gestureHandling:"greedy"}}
+                            >
+                                <Marker nameeee="testtt" id={this.state.id} lat={this.state.latitude} lng={this.state.longitude} color={this.state.color} />
+
+                            </GoogleMapReact> */}
+
                             {/* Should this be a GoogleMapReact^^^ ? */}
-                            <span className="card-title" style={{color: "black", fontWeight:500, fontSize:"2.4rem"}}>Crime Info</span>
+                            <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Crime Info</span>
                             </div>
                             <div className="card-content">
                             {/* <GoogleMap/> */}
