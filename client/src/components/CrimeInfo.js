@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './SideNav.css'
+import './CrimeInfo.css'
 import GoogleMapReact from 'google-map-react'
 import GoogleMap from './GoogleMap.js'
 import Marker from './Marker.js'
@@ -46,7 +47,7 @@ export class CrimeInfo extends Component {
         attendeeCount: null,
         status: null,
         division_id: null,
-        dataLoaded: false
+        dataLoaded: false,
     }
 
 
@@ -75,7 +76,6 @@ export class CrimeInfo extends Component {
     }
 
     onExitClick(){
-        // ReactDOM.unmountComponentAtNode(ReactDOM.findDOMNode(this).parentNode);
         this.props.closeCrimeDialog();
     }
 
@@ -97,67 +97,77 @@ export class CrimeInfo extends Component {
 
         
         if(this.state.dataLoaded){
+
+            var dateDisplay = this.state.datetime.replace('Z','')
+            dateDisplay = dateDisplay.replace('T', ' ')
+            dateDisplay = dateDisplay.replace('.000', '')
+            var dateFormatted = new Date(Date.parse(dateDisplay))
+            
+
             return (
-                <div>
-                    <div className="row">
-                        <div className="col s12 m6" style={{width: "100%"}}>
-                        <div className="card z-depth-5" style={{}} >
-                            <div className="card-image" style={{height: "20%"}}>
-                            <ul style={{position: "absolute", zIndex: "5", left: "15px"}}>
-                                <li>
-                                <button className="btn-floating btn-large waves-effect " onClick={() => this.props.closeCrimeDialog()}><i className="material-icons primary-background" style={{color:"white", fontSize: "45px"}}>arrow_back</i></button>
-                                </li>
-                            </ul>
-                            {/* <img src="images/gardaBackground.jpg"/> */}
-                            <img src="images/blue-box.svg" style={{maxHeight: "20vh"}}/>
-{/*                             <
-                            <GoogleMapReact 
-                                      bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
-                                      defaultCenter={
-                                          {
-                                              lat: this.state.latitude,
-                                             lng:this.state.longitude
-                                         }
-                                        }
-                                      defaultZoom={13}
-                                      options={{    disableDefaultUI: true,
-                                        gestureHandling:"greedy"}}
-                            >
-                                <Marker nameeee="testtt" id={this.state.id} lat={this.state.latitude} lng={this.state.longitude} color={this.state.color} />
+                <div className="col s10 m6 offset-s1 offset-m3" style={{display:"block",position:"absolute", top:"15px", zIndex:"5", left:"0", right:"0"}} className="center-align">
+                    <div className="container">
+                        <div className="row">
+                            <div ></div>
+                            <div className="col s12  m2 offset-m5 l2" style={{width: "100%"}}>
+                            <div className="card z-depth-5" style={{}} >
+                                <div className="card-image" style={{height: "20%"}}>
+                                <ul style={{position: "absolute", zIndex: "5", left: "15px"}}>
+                                    <li>
+                                    <button className="btn-floating btn-large waves-effect " onClick={() => this.props.closeCrimeDialog()}><i className={this.props.color + " material-icons"} style={{color:"white", fontSize: "45px"}}>arrow_back</i></button>
+                                    </li>
+                                </ul>
+                                {/* <img src="images/gardaBackground.jpg"/> */}
+                                <div className={this.props.color + " box"} style={{height: "20vh"}}/>
+    {/*                             <
+                                <GoogleMapReact 
+                                        bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
+                                        defaultCenter={
+                                            {
+                                                lat: this.state.latitude,
+                                                lng:this.state.longitude
+                                            }
+                                            }
+                                        defaultZoom={13}
+                                        options={{    disableDefaultUI: true,
+                                            gestureHandling:"greedy"}}
+                                >
+                                    <Marker nameeee="testtt" id={this.state.id} lat={this.state.latitude} lng={this.state.longitude} color={this.state.color} />
 
-                            </GoogleMapReact> */}
+                                </GoogleMapReact> */}
 
-                            {/* Should this be a GoogleMapReact^^^ ? */}
-                            <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Crime Info</span>
-                            </div>
-                            <div className="card-content">
-                            {/* <GoogleMap/> */}
-                                <p style={{fontWeight:"bold"}}>Crime #{this.state.id}</p>
+                                {/* Should this be a GoogleMapReact^^^ ? */}
+                                <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Crime #{this.state.id}</span>
                                 </div>
+                                <div className="card-content">
+                                {/* <GoogleMap/> */}
+                                    </div>
 
-                                <div className="container">
-                                    <table id="crimeInfoTable">
-                                        <thead>
+                                    <div className="container">
+                                        <table id="crimeInfoTable">
+                                            <thead>
 
-                                        </thead>
-                                        <tbody>
-                                            <tr><th>Crime</th><td>{this.state.crimeType}</td></tr>
-                                            <tr><th>Description</th><td>{this.state.crimeDescription}</td></tr>
-                                            <tr><th>Contact</th><td>{this.state.victimContact}</td></tr>
-                                            <tr><th>Urgency</th><td>Level {this.state.urgency}</td></tr>
-                                            <tr><th>Dangers</th><td>{this.state.dangers}</td></tr>
-                                            <tr><th>Suspect(s)</th><td>{this.state.suspectDescription}</td></tr>
-                                            <tr><th>Status</th><td>{this.state.status}</td></tr>
-                                            <tr><th>Attending</th><td>{this.state.attendeeCount} Units</td></tr>
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                                <tr><th rowSpan="2"><p style={{fontWeight:"bold", textAlign:"center"}}>{dateFormatted.toGMTString().replace("\"", "")}</p></th></tr>
+                                                <tr><th>Crime</th><td>{this.state.crimeType}</td></tr>
+                                                <tr><th>Description</th><td>{this.state.crimeDescription}</td></tr>
+                                                <tr><th>Contact</th><td>{this.state.victimContact}</td></tr>
+                                                <tr><th>Urgency</th><td>Level {this.state.urgency}</td></tr>
+                                                <tr><th>Dangers</th><td>{this.state.dangers}</td></tr>
+                                                <tr><th>Suspect(s)</th><td>{this.state.suspectDescription}</td></tr>
+                                                <tr><th>Status</th><td>{this.state.status}</td></tr>
+                                                <tr><th>Attending</th><td>{this.state.attendeeCount} Units</td></tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
+                                    <a href="#" className="btn primary-background crime-card-button">Attend Crime</a>
+                                    <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}}>Create Report</a>
+                                    <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
                                 </div>
-                            <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                <a href="#" className="btn primary-background">Attend</a>
-                                <a href="#" className="btn primary-background" style={{margin: "15px"}}>Create Report</a>
-                                <a href="#" className="btn primary-background" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
                             </div>
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>

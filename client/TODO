@@ -25,7 +25,7 @@ Client:
             ✔ Back button @done(20-02-24 01:39)
             ☐ Attend Button Functionality
             ☐ Create Report Functionality
-            ☐ Mark Resolved Functionality
+            ✔ Mark Resolved Functionality @done(20-02-25 03:35)
         SideNav:
             ☐ My reports - Filter reports by user
             ☐ Information - Dialog box explaining system

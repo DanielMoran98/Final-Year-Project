@@ -1,8 +1,39 @@
-#crimeInfoTable {
+/* #crimeInfoTable {
     display: block !important;
   }
   
   #crimeInfoTable td {
     display: inline-block !important;
   }
+   */
+
+tbody {
+  display:block;
+  height:45vh;
+  overflow:auto;
+}
   
+thead, tbody tr {
+  display:table;
+  width:100%;
+  table-layout:fixed;
+}
+
+thead {
+  width: calc( 100% - 1em )
+}
+
+table {
+  width:100%;
+}
+
+.crime-card-button{
+  font-size:13px !important;
+  max-width:30%;
+  line-height: auto !important;
+  height:auto !important;
+}
+
+.box{
+  height: 20vh;
+}

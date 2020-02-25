@@ -16,7 +16,8 @@ function createMapOptions(maps) {
   // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
   return {
     disableDefaultUI: true,
-    gestureHandling:"greedy"
+    gestureHandling:"greedy",
+    clickableIcons: false
   };
 }
 
@@ -95,7 +96,8 @@ class GoogleMap extends Component {
           options={
             {    
               disableDefaultUI: true,
-              gestureHandling:"greedy"
+              gestureHandling:"greedy",
+              clickableIcons: false
             }
           }  
         >
