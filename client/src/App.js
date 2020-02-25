@@ -6,9 +6,15 @@ import Login from './pages/login/Login';
 import Map from './pages/map/Map';
 import SideNav from './components/SideNav';
 import CrimeInfo from './components/CrimeInfo';
-function App() {
-  return (
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure()
+
+function App() {
+ 
+  return (
+    
     <div className="App">
     <div className="styles">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"/>

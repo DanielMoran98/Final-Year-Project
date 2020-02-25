@@ -83,11 +83,11 @@ app.get('/api/crime/:id/resolve', (req,res) => {
       let query = db.query(sql, (err, result) => {
       if(err) throw err;
 
-        res.send("Crime #"+req.params.id+" marked as resolved.");
+        res.json("Crime #"+req.params.id+" marked as resolved.");
       });
 
     }else{
-      res.send("Crime #"+req.params.id+" doesn't exist.");
+      res.json("Crime #"+req.params.id+" doesn't exist.");
     }
     conn.end();
   });

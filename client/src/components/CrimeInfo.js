@@ -5,6 +5,8 @@ import GoogleMapReact from 'google-map-react'
 import GoogleMap from './GoogleMap.js'
 import Marker from './Marker.js'
 import M from 'materialize-css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function createMapOptions(maps) {
@@ -77,6 +79,20 @@ export class CrimeInfo extends Component {
         this.props.closeCrimeDialog();
     }
 
+    async markResolved(id){
+
+        const url = `/api/crime/${id}/resolve`;
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data)
+
+        toast(`Crime #${id} marked as resolved.`,{
+            type: toast.TYPE.INFO,
+            position: toast.POSITION.TOP_CENTER
+        });
+        this.onExitClick()
+    }
+
     render() {
 
         
@@ -125,7 +141,6 @@ export class CrimeInfo extends Component {
 
                                         </thead>
                                         <tbody>
-            {/* <tr><th>Location</th><td>Latitude: {this.state.latitude} Longitude: {this.state.longitude}<br/></td></tr> */}
                                             <tr><th>Crime</th><td>{this.state.crimeType}</td></tr>
                                             <tr><th>Description</th><td>{this.state.crimeDescription}</td></tr>
                                             <tr><th>Contact</th><td>{this.state.victimContact}</td></tr>
@@ -140,7 +155,7 @@ export class CrimeInfo extends Component {
                             <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
                                 <a href="#" className="btn primary-background">Attend</a>
                                 <a href="#" className="btn primary-background" style={{margin: "15px"}}>Create Report</a>
-                                <a href="#" className="btn primary-background">Mark Resolved</a>
+                                <a href="#" className="btn primary-background" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
                             </div>
                         </div>
                         </div>
