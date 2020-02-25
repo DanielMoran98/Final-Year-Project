@@ -5,9 +5,12 @@ API:
     ☐ Login system
         ☐ Password encryption
     ☐ Implement JSON Web Tokens
+    ✔ /crime/:id/resolve @done(20-02-25 02:12)
+        Marks specific crime status as inactive
 
 Database:
     ✔ Update default values for crime table values @done(20-02-24 00:48)
+    ☐ Add crime categories
 
 Client:
     Components:
@@ -16,8 +19,9 @@ Client:
             ☐ Show current location
         Marker:
             ✔ Display correct CrimeInfo on click @done(20-02-24 00:48)
+            ☐ Add unique key prop to each marker
         CrimeInfo:
-            ☐ Populate fields with API data
+            ✔ Populate fields with API data @done(20-02-24 11:38)
             ✔ Back button @done(20-02-24 01:39)
             ☐ Attend Button Functionality
             ☐ Create Report Functionality
@@ -34,9 +38,13 @@ Client:
             ✔ Connect crime dialog component to API @done(20-02-24 00:46)
             ✔ Implement React Portals @done(20-02-24 00:17)
     Pages:
+        Login:
+            ☐ Connect to API
         Unit:
-            ☐ Create/Join units post-login
+            ☐ Create units
+            ☐ Join units
 Bugs:
     ☐ SideNav button only working on refresh
     ☐ React portal now moves marker to root along with the crime-dialog modal
+    ☐ Anchor point for markers is the top left of the image rather than bottom-center
 Archive:

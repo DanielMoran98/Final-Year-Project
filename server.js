@@ -67,6 +67,32 @@ app.get('/api/crime/:id', (req,res) => {
   });
 });
 
+app.get('/api/crime/:id/resolve', (req,res) => {
+  var sql = SqlString.format('SELECT * FROM crime WHERE id=?', req.params.id)
+  const db = mysql.createConnection(dbCredentials);
+  var conn = db;
+
+  let query = db.query(sql, (err, result) => {
+    if(err) throw err;
+
+    if(Array.isArray(result) && result.length){
+      //If crime exists: Mark it as resolved
+      sql = SqlString.format(`UPDATE crime SET status = 'inactive' WHERE id=?`, req.params.id)
+      console.log(sql)
+
+      let query = db.query(sql, (err, result) => {
+      if(err) throw err;
+
+        res.send("Crime #"+req.params.id+" marked as resolved.");
+      });
+
+    }else{
+      res.send("Crime #"+req.params.id+" doesn't exist.");
+    }
+    conn.end();
+  });
+});
+
 app.get('/api/unit/all', (req,res) => {
   var sql = SqlString.format('SELECT * FROM unit');
   const db = mysql.createConnection(dbCredentials);

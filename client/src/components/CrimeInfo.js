@@ -89,7 +89,7 @@ export class CrimeInfo extends Component {
                             <div className="card-image" style={{height: "20%"}}>
                             <ul style={{position: "absolute", zIndex: "5", left: "15px"}}>
                                 <li>
-                                <button className="btn-floating btn-large waves-effect waves-light white" onClick={() => this.props.closeCrimeDialog()}><i className="material-icons" style={{color:"black", fontSize: "45px"}}>arrow_back</i></button>
+                                <button className="btn-floating btn-large waves-effect " onClick={() => this.props.closeCrimeDialog()}><i className="material-icons primary-background" style={{color:"white", fontSize: "45px"}}>arrow_back</i></button>
                                 </li>
                             </ul>
                             {/* <img src="images/gardaBackground.jpg"/> */}
@@ -138,9 +138,9 @@ export class CrimeInfo extends Component {
                                     </table>
                                 </div>
                             <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                <a href="#" className="btn">Attend</a>
-                                <a href="#" className="btn">Create Report</a>
-                                <a href="#" className="btn">Mark Resolved</a>
+                                <a href="#" className="btn primary-background">Attend</a>
+                                <a href="#" className="btn primary-background" style={{margin: "15px"}}>Create Report</a>
+                                <a href="#" className="btn primary-background">Mark Resolved</a>
                             </div>
                         </div>
                         </div>
