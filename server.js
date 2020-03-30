@@ -15,6 +15,7 @@ const dbCredentials = {
   password : process.env.DATABASE_PASSWORD,
   database : process.env.DATABASE_DATABASE
 };
+const jwtSecret = process.env.JWT_SECRET
 
 const bodyParser = require('body-parser')
 
@@ -86,7 +87,7 @@ app.post('/login', (req, res) => {
           email: results[0].email
         }
 
-        jwt.sign(user, 'mysecretkey',{expiresIn: '40s'}, (err, token) => {
+        jwt.sign(user, jwtSecret,{expiresIn: '40s'}, (err, token) => {
           console.log("Login success!")
           res.json({
             token: token,
@@ -109,7 +110,7 @@ app.post('/login', (req, res) => {
 
 
 app.get('/api/posts', verifyToken, (req, res) => {
-  jwt.verify(req.token, 'mysecretkey', (err, authData) =>{
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
       res.sendStatus(403)
       }else{
@@ -136,7 +137,7 @@ app.get('/api/division/all', (req, res) => {
 app.post('/api/crime/all', verifyToken,(req,res) => {
   // console.log(req.headers.authorization)
   
-  jwt.verify(req.token, 'mysecretkey', (err, authData) =>{
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
       res.sendStatus(403)
       }else{
