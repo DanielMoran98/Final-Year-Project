@@ -23,7 +23,7 @@ class Map extends Component {
       <Route path="/map" exact component={SideNav}/>
       <div className="row header">
         <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
-        <div className="col s8"><span className="username">Sgt. Daniel Moran</span><br/><span className="unitname">Unit DT-103</span></div>
+        <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
         <div className="col s2"><a className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">close</i></a><br/><span className="buttonLabel">Busy</span></div>
       </div>
         <div id="GoogleMap">

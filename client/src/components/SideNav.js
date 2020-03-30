@@ -10,17 +10,22 @@ class SideNav extends Component {
     });
   }
   render() {
+    function logout(){
+      localStorage.setItem('jwtToken', '');
+      window.location.replace("/")
+      console.log(localStorage.getItem('jwtToken'))
+    }
     return (
 <div>
-
+  
   <nav className="transparent"></nav>
   <ul id="slide-out" className="sidenav">
-    <li>Sgt. Daniel Moran</li>
+    <li>{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</li>
     <li><div className="divider" /></li>
     <li><a className="waves-effect" href="#!">My reports</a></li>
     <li><a className="waves-effect" href="#!">Information</a></li>
     <li><a className="waves-effect" href="#!">Settings</a></li>
-    <li><a className="waves-effect" href="#!">End patrol</a></li>
+    <li><a className="waves-effect" href="#!" onClick={() => logout()}>End patrol</a></li>
 
     <li><div className="divider" /></li>
     <li><a className="subheader germ-version">GERM Version 0.1</a></li>
