@@ -1,10 +1,17 @@
 ✔ Create a TODO @done(20-02-21 17:53)
 
 API:
+    Security:
+        ✔ Implement input sanitization @done(20-03-30 19:45)
     ✔ Setup /crime/all API @done(20-02-21 17:51)
     ☐ Login system
-        ☐ Password encryption
-    ☐ Implement JSON Web Tokens
+        ☐ Add error messages
+        ☐ BCrypt Encryption
+    Auth:
+        ✔ Implement JSON Web Token creation @done(20-03-30 19:45)
+        ☐ Create JSON Web Token verification
+        ☐ Implement RBAC
+
     ✔ /crime/:id/resolve @done(20-02-25 02:12)
         Marks specific crime status as inactive
 
@@ -13,6 +20,7 @@ Database:
     ☐ Add crime categories
 
 Client:
+    ✔ Switch to Axios for requests @done(20-03-30 19:43)
     Components:
         App:
         GoogleMap:
@@ -22,10 +30,14 @@ Client:
             ☐ Add unique key prop to each marker
         CrimeInfo:
             ✔ Populate fields with API data @done(20-02-24 11:38)
+            ✔ Create crime dialog component @done(20-02-24 00:17)
+            ✔ Connect crime dialog component to API @done(20-02-24 00:46)
+            ✔ Implement React Portals @done(20-02-24 00:17)
             ✔ Back button @done(20-02-24 01:39)
             ☐ Attend Button Functionality
             ☐ Create Report Functionality
             ✔ Mark Resolved Functionality @done(20-02-25 03:35)
+            
         SideNav:
             ☐ My reports - Filter reports by user
             ☐ Information - Dialog box explaining system
@@ -34,17 +46,17 @@ Client:
         Report:
             ☐ Create Report dialog component
         NewCrime:
-            ✔ Create crime dialog component @done(20-02-24 00:17)
-            ✔ Connect crime dialog component to API @done(20-02-24 00:46)
-            ✔ Implement React Portals @done(20-02-24 00:17)
+
     Pages:
         Login:
             ☐ Connect to API
         Unit:
             ☐ Create units
             ☐ Join units
+            
 Bugs:
     ☐ SideNav button only working on refresh
     ☐ React portal now moves marker to root along with the crime-dialog modal
     ☐ Anchor point for markers is the top left of the image rather than bottom-center
+
 Archive:
