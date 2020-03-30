@@ -8,9 +8,9 @@ import SideNav from './components/SideNav';
 import CrimeInfo from './components/CrimeInfo';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const axios = require('axios');
 
 toast.configure()
-
 function App() {
  
   return (
@@ -30,6 +30,8 @@ function App() {
       <div className="imports">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
         {console.log("Imported")}
       </div>
     </div>

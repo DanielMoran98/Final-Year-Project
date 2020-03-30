@@ -7,32 +7,73 @@ import {
   Link,
   useRouteMatch
 } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const axios = require('axios');
+
 
 function Login() {
-  return (
 
+  function submitLogin(email, password){
+
+    axios.post('/login', {
+      email: email,
+      password: password
+    })
+    .then(function (response) {
+      console.log("res");
+      if(response.data == "Login failed"){
+        toast(`Login Failed`,{
+          type: toast.TYPE.ERROR,
+          position: toast.POSITION.TOP_CENTER
+      });
+      }else{
+        toast(`Login Success!`,{
+          type: toast.TYPE.SUCCESS,
+          position: toast.POSITION.TOP_CENTER
+        });
+        localStorage.setItem('jwtToken', response.data.token);
+        localStorage.setItem('user_id', response.data.user.id);
+        localStorage.setItem('user_name', response.data.user.name);
+        localStorage.setItem('user_rank', response.data.user.rank);
+        localStorage.setItem('user_badgeNumber', response.data.user.badgeNumber);
+        localStorage.setItem('user_staffType', response.data.user.staffType);
+        localStorage.setItem('user_email', response.data.user.email);
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('jwtToken')
+        console.log("Auth: "+localStorage.getItem('Authorization'))
+        setTimeout(()=>{window.location.replace("/map")}, 1500);
+      }
+      console.log(response.data);
+    })
+    .catch(function (error) {
+      console.log("err");
+
+      console.log(error);
+    });
+  }
+  return (
+    
     <div className="Login">
+
+      
       <div className="container">
         <div className="row">
           <div className ="col m6 offset-m3 s10 offset-s1">
             <div className="loginBox">
               <h1>Login</h1>
-
-              <div className="row">
+                <div className="row">
+                  <div className="input-field">
+                    <input id="emailField" type="email" className="validate" name="email" required/>
+                    <label className="active" htmlFor="emailField" >Garda Email</label>
+                  </div>
+                </div>
+                <div className="row">
                 <div className="input-field">
-                  <input id="emailField" type="email" className="validate"/>
-                  <label className="active" htmlFor="emailField">Garda Email</label>
+                  <input id="passwordField" type="password" className="validate" name="password" required/>
+                  <label className="active" htmlFor="passwordField" >Garda Password</label>
                 </div>
               </div>
-              <div className="row">
-                <div className="input-field">
-                  <input id="passwordField" type="password" className="validate"/>
-                  <label className="active" htmlFor="passwordField">Garda Password</label>
-                </div>
-              </div>
-              <Link to="/map">
-                <button className="btn primary-background">Login</button>
-              </Link>
+              <button type="button" onClick={() => submitLogin(document.getElementById("emailField").value, document.getElementById("passwordField").value)} className="btn primary-background">Login</button>
             </div>
           </div>
         </div>

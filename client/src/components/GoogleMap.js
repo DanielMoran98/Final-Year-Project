@@ -3,6 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker"
 import CrimeInfo from './CrimeInfo';
 import M from 'materialize-css';
+const axios = require('axios');
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -39,46 +40,53 @@ class GoogleMap extends Component {
 
 
   async componentDidMount(){
-    const url = "/api/crime/all";
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data)
 
-    
-    //Create a copy of the current markers array
-    var newMarkers = this.state.markers.slice();
-    for(var i = 0; i < data.length ; i++){
-      console.log(data[i].id)
-      if(data[i].status == "active"){
-        var newColor = ""
-        switch (data[i].urgency) {
-          case 1:
-            newColor = "green";
-            break;
-          case 2:
-            newColor = "yellow";
-            break;
-          case 3:
-            newColor = "orange";
-            break;
-          case 4:
-            newColor = "red";
-            break;
+    try {
+      const response = await axios.post('/api/crime/all', "", {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
+      console.log(response);
+      var data = response.data
+      //Create a copy of the current markers array
+      var newMarkers = this.state.markers.slice();
+      for(var i = 0; i < data.length ; i++){
+        console.log(data[i].id)
+        if(data[i].status == "active"){
+          var newColor = ""
+          switch (data[i].urgency) {
+            case 1:
+              newColor = "green";
+              break;
+            case 2:
+              newColor = "yellow";
+              break;
+            case 3:
+              newColor = "orange";
+              break;
+            case 4:
+              newColor = "red";
+              break;
 
+          }
+          var marker = {
+            id: data[i].id,
+            lat: data[i].latitude,
+            lng: data[i].longitude,
+            color: newColor
+          }
+          //Push each object to the array
+          newMarkers.push(marker);
         }
-        var marker = {
-          id: data[i].id,
-          lat: data[i].latitude,
-          lng: data[i].longitude,
-          color: newColor
-        }
-        //Push each object to the array
-        newMarkers.push(marker);
       }
+      // Update the state with the new array
+      this.setState({markers: newMarkers});
+
+    } catch (error) {
+      console.error(error);
+      window.location.replace("/");
+
     }
 
-    // Update the state with the new array
-    this.setState({markers: newMarkers});
+
+    
 
   }
   render() {
@@ -123,7 +131,7 @@ class GoogleMap extends Component {
       </div>
     );
   } else {
-    return <div>LOADING</div> 
+    return <div style={{position:"fixed", left:"50%", top:"50%"}}>LOADING</div> 
   }
   }
 }
