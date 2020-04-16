@@ -10,7 +10,7 @@ Client:
         GoogleMap:
             ☐ Show current location
         Marker:
-            ☐ Add unique key prop to each marker
+            ✔ Add unique key prop to each marker @done(20-04-16 22:45)
         CrimeInfo:
             ☐ Attend Button Functionality
             ☐ Create Report Functionality
