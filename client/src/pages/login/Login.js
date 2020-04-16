@@ -39,6 +39,7 @@ function Login() {
         localStorage.setItem('user_badgeNumber', response.data.user.badgeNumber);
         localStorage.setItem('user_staffType', response.data.user.staffType);
         localStorage.setItem('user_email', response.data.user.email);
+        localStorage.setItem('user_division_id', response.data.user.division_id);
         axios.defaults.headers.common['Authorization'] = 'Bearer '+localStorage.getItem('jwtToken')
         console.log("Auth: "+localStorage.getItem('Authorization'))
         setTimeout(()=>{window.location.replace("/map")}, 1500);

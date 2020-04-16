@@ -84,7 +84,8 @@ app.post('/login', (req, res) => {
           rank: results[0].rank,
           badgeNumber: results[0].badgeNumber,
           rank: results[0].rank,
-          email: results[0].email
+          email: results[0].email,
+          division_id: results[0].division_id
         }
 
         jwt.sign(user, jwtSecret,{expiresIn: '40s'}, (err, token) => {
@@ -168,6 +169,28 @@ app.get('/api/crime/:id', (req,res) => {
     }else{
       res.send("No results");
     }
+    conn.end();
+  });
+});
+
+app.post('/api/crime/create', verifyToken, (req,res) => {
+  console.log(req.params.crime_crime)
+  if(req.body.urgency == "" || typeof req.body.urgency == 'undefined'){req.body.urgency=1}
+
+  for (const property in req.body) {
+    console.log(`${property}: ${req.body[property]}`);
+    if(req.body[property] == "" || typeof req.body[property] == 'undefined'){req.body[property]="No information provided."}
+    console.log(`${property}: ${req.body[property]}`);
+  }
+
+  var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?)', [req.body.latitude, req.body.longitude, req.body.crimeType, req.body.crimeDescription, req.body.suspectDescription, req.body.victimContact, req.body.urgency, req.body.division_id, req.body.staff_id])
+  const db = mysql.createConnection(dbCredentials);
+  var conn = db;
+
+  let query = db.query(sql, (err, result) => {
+    if(err) throw err;
+
+    res.send("something")
     conn.end();
   });
 });

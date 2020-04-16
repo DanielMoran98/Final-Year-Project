@@ -8,7 +8,7 @@ import Marker from './Marker.js'
 import M from 'materialize-css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+const axios = require("axios")
 
 
   
@@ -37,6 +37,7 @@ export class CreateCrime extends Component {
     }
 
 
+    
     async componentDidMount(){
         // const url = "/api/crime/"+this.props.id;
         // const response = await fetch(url);
@@ -66,19 +67,42 @@ export class CreateCrime extends Component {
     }
 
     async createCrime(){
+        
+        var formData = {
+            latitude: this.props.crimeLat,
+            longitude: this.props.crimeLng,
+            crimeType: document.getElementById("crime_crime").value,
+            crimeDescription: document.getElementById("crime_description").value,
+            victimContact: document.getElementById("crime_victim").value,
+            urgency: document.getElementById("crime_urgency").value,
+            dangers: document.getElementById("crime_dangers").value,
+            suspectDescription: document.getElementById("crime_suspect").value,
+            division_id: localStorage.getItem('user_division_id'),
+            staff_id: localStorage.getItem('user_id')
+        }
 
-        // const url = `/api/crime/${id}/resolve`;
-        // const response = await fetch(url);
-        // const data = await response.json();
-        // console.log(data)
+        console.log(formData)
+        const response = await axios.post('/api/crime/create',formData , {headers: {'Authorization': "Bearer "+"a"+localStorage.getItem('jwtToken')}}).then(function(){
+            console.log("done")
+            toast(`Crime sent to the Gardaí`,{
+                type: toast.TYPE.INFO,
+                position: toast.POSITION.TOP_CENTER
+            });
+      
+      
+        }).catch(function(){
+            toast(`Crime failed to submit, check your fields and try again`,{
+                type: toast.TYPE.ERROR,
+                position: toast.POSITION.TOP_CENTER
+            });
+        })
 
-        // toast(`Crime #${id} marked as resolved.`,{
-        //     type: toast.TYPE.INFO,
-        //     position: toast.POSITION.TOP_CENTER
-        // });
-        // this.onExitClick()
 
 
+        console.log("Res: "+response)
+        this.onExitClick()
+
+ 
     }
 
     render() {
@@ -140,7 +164,7 @@ export class CreateCrime extends Component {
                                                 <tr><th>Urgency</th>
                                                 <td> <div className="input-field col s10">
                                                     <input id="crime_urgency" type="number" className="validate" min="1" max="4" required/>
-                                                    <label htmlFor="crime_urgency">Urgency Level (1/2/3/4)</label>
+                                                    <label htmlFor="crime_urgency">Urgency Level (1-4)</label>
                                                 </div></td></tr>
                                                 <tr><th>Dangers</th>
                                                 <td><div className="input-field col s10">
@@ -157,7 +181,7 @@ export class CreateCrime extends Component {
                                         </table>
                                     </div>
                                 <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                    <a href="#" className="btn primary-background crime-card-button" style={{marginRight: 20}} onClick={() => this.createCrime()}>Submit</a>
+                                    <a href="#"  className="btn primary-background crime-card-button" style={{marginRight: 20}} onClick={() => this.createCrime()}>Submit</a>
                                     <a href="#" className="btn red crime-card-button" onClick={() => this.props.closeCrimeDialog()}>Cancel</a>
                                 </div>
                             </div>
