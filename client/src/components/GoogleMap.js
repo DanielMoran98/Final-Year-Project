@@ -3,6 +3,9 @@ import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker"
 import CrimeInfo from './CrimeInfo';
 import M from 'materialize-css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const axios = require('axios');
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
@@ -36,18 +39,17 @@ class GoogleMap extends Component {
     markers: [
 
     ],
-    renderCreateCrime: false
+    renderCreateCrime: false,
+    errorDisplayed: false
   };
 
   async getMarkers(){
     try {
       const response = await axios.post('/api/crime/all', "", {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
-      console.log(response);
       var data = response.data
       //Create a copy of the current markers array
       var newMarkers = []
       for(var i = 0; i < data.length ; i++){
-        console.log(data[i].id)
         if(data[i].status == "active"){
           var newColor = ""
           switch (data[i].urgency) {
@@ -79,9 +81,16 @@ class GoogleMap extends Component {
       this.setState({markers: newMarkers});
 
     } catch (error) {
+      if(this.state.errorDisplayed == false){
+      this.setState({errorDisplayed: true})
       console.error(error);
-      window.location.replace("/");
-
+      toast(`Your authentication token has expired, you are no longer authorized. Please log in again.`,{
+        type: toast.TYPE.ERROR,
+        position: toast.POSITION.TOP_CENTER
+      });
+      setTimeout(()=>window.location.replace("/"), 5000)
+      // window.location.replace("/");
+     }
     }
   }
 
@@ -90,8 +99,7 @@ class GoogleMap extends Component {
     this.interval = setInterval(()=>this.getMarkers(), 1500);
 
   }
-  // componentDidMount() {
-  // }
+
   componentWillUnmount() {
     clearInterval(this.interval);
   }

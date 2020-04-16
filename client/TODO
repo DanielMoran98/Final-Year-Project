@@ -11,6 +11,7 @@ Client:
             ☐ Show current location
         Marker:
             ✔ Add unique key prop to each marker @done(20-04-16 22:45)
+            ✔ Dynamically update markers @done(20-04-16 23:33)
         CrimeInfo:
             ☐ Attend Button Functionality
             ☐ Create Report Functionality

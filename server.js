@@ -35,7 +35,7 @@ app.use(bodyParser.json())
 
 function verifyToken(req, res, next){
   const bearerHeader = req.headers['authorization'];
-  console.log(bearerHeader)
+  // console.log(bearerHeader)
 
   if(typeof bearerHeader != 'undefined'){
     const bearer = bearerHeader.split(" ");
