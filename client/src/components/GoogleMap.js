@@ -39,15 +39,13 @@ class GoogleMap extends Component {
     renderCreateCrime: false
   };
 
-
-  async componentDidMount(){
-
+  async getMarkers(){
     try {
       const response = await axios.post('/api/crime/all', "", {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
       console.log(response);
       var data = response.data
       //Create a copy of the current markers array
-      var newMarkers = this.state.markers.slice();
+      var newMarkers = []
       for(var i = 0; i < data.length ; i++){
         console.log(data[i].id)
         if(data[i].status == "active"){
@@ -65,8 +63,8 @@ class GoogleMap extends Component {
             case 4:
               newColor = "red";
               break;
-
           }
+
           var marker = {
             id: data[i].id,
             lat: data[i].latitude,
@@ -85,11 +83,19 @@ class GoogleMap extends Component {
       window.location.replace("/");
 
     }
+  }
 
-
-    
+  componentDidMount(){
+    this.getMarkers()
+    this.interval = setInterval(()=>this.getMarkers(), 1500);
 
   }
+  // componentDidMount() {
+  // }
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  
   render() {
 
     if (this.state.markers.length > 0) {
@@ -116,7 +122,7 @@ class GoogleMap extends Component {
 
           {/* Populate map with markers from API / State */}
           {this.state.markers.map(i => {
-              return <Marker id={i.id} lat={i.lat} lng={i.lng} color={i.color} staffType={this.props.staffType}/>
+              return <Marker id={i.id} key={i.id} lat={i.lat} lng={i.lng} color={i.color} staffType={this.props.staffType}/>
              
             })}
 
