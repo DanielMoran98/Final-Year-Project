@@ -1,42 +1,21 @@
-✔ Create a TODO @done(20-02-21 17:53)
 
 API:
-    Security:
-        ✔ Implement input sanitization @done(20-03-30 19:45)
-    ✔ Setup /crime/all API @done(20-02-21 17:51)
-    ☐ Login system
-        ☐ Add error messages
         ☐ BCrypt Encryption
     Auth:
-        ✔ Implement JSON Web Token creation @done(20-03-30 19:45)
-        ☐ Create JSON Web Token verification
-        ☐ Implement RBAC
-
-    ✔ /crime/:id/resolve @done(20-02-25 02:12)
-        Marks specific crime status as inactive
+        ☐ Implement Role Based Access Control
 
 Database:
-    ✔ Update default values for crime table values @done(20-02-24 00:48)
     ☐ Add crime categories
 
 Client:
-    ✔ Switch to Axios for requests @done(20-03-30 19:43)
     Components:
-        App:
         GoogleMap:
             ☐ Show current location
         Marker:
-            ✔ Display correct CrimeInfo on click @done(20-02-24 00:48)
             ☐ Add unique key prop to each marker
         CrimeInfo:
-            ✔ Populate fields with API data @done(20-02-24 11:38)
-            ✔ Create crime dialog component @done(20-02-24 00:17)
-            ✔ Connect crime dialog component to API @done(20-02-24 00:46)
-            ✔ Implement React Portals @done(20-02-24 00:17)
-            ✔ Back button @done(20-02-24 01:39)
             ☐ Attend Button Functionality
             ☐ Create Report Functionality
-            ✔ Mark Resolved Functionality @done(20-02-25 03:35)
             
         SideNav:
             ☐ My reports - Filter reports by user
@@ -45,18 +24,35 @@ Client:
             ☐ End Patrol - Logout, disband unit
         Report:
             ☐ Create Report dialog component
-        NewCrime:
 
     Pages:
-        Login:
-            ☐ Connect to API
         Unit:
             ☐ Create units
             ☐ Join units
             
 Bugs:
     ☐ SideNav button only working on refresh
-    ☐ React portal now moves marker to root along with the crime-dialog modal
     ☐ Anchor point for markers is the top left of the image rather than bottom-center
 
 Archive:
+  ✔ Connect to API @done(20-04-06 10:01) @project(Client.Pages.Login)
+  ✔ React portal now moves marker to root along with the crime-dialog modal @done(20-04-06 09:56) @project(Bugs)
+  ✔ Create a TODO @done(20-02-21 17:53)
+  ✔ Implement input sanitization @done(20-03-30 19:45) @project(API.Security)
+  ✔ Load JWT secret from environment variables @done(20-03-30 21:49) @project(API.Security)
+  ✔ Setup /crime/all API @done(20-02-21 17:51) @project(API)
+  ✔ Login system @done(20-03-30 21:49) @project(API)
+  ✔ Add error messages @done(20-03-30 21:49) @project(API)
+  ✔ Implement JSON Web Token creation @done(20-03-30 19:45) @project(API.Auth)
+  ✔ Create JSON Web Token verification @done(20-03-30 21:49) @project(API.Auth)
+  ✔ /crime/:id/resolve @done(20-02-25 02:12) @project(API)
+      Marks specific crime status as inactive
+  ✔ Update default values for crime table values @done(20-02-24 00:48) @project(Database)
+  ✔ Switch to Axios for requests @done(20-03-30 19:43) @project(Client)
+  ✔ Display correct CrimeInfo on click @done(20-02-24 00:48) @project(Client.Components.Marker)
+  ✔ Populate fields with API data @done(20-02-24 11:38) @project(Client.Components.CrimeInfo)
+  ✔ Create crime dialog component @done(20-02-24 00:17) @project(Client.Components.CrimeInfo)
+  ✔ Connect crime dialog component to API @done(20-02-24 00:46) @project(Client.Components.CrimeInfo)
+  ✔ Implement React Portals @done(20-02-24 00:17) @project(Client.Components.CrimeInfo)
+  ✔ Back button @done(20-02-24 01:39) @project(Client.Components.CrimeInfo)
+  ✔ Mark Resolved Functionality @done(20-02-25 03:35) @project(Client.Components.CrimeInfo)

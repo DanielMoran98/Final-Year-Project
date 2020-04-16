@@ -8,6 +8,7 @@ import SideNav from './components/SideNav';
 import CrimeInfo from './components/CrimeInfo';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import CreateCrime from './components/CreateCrime';
 const axios = require('axios');
 
 toast.configure()
@@ -24,7 +25,7 @@ function App() {
     <Router>
       <Route path="/" exact component={Login} />
       <Route path="/map" exact component={Map} />
-      <Route path="/test" exact component={CrimeInfo} />
+      <Route path="/test" exact component={CreateCrime} />
     </Router>
 
       <div className="imports">

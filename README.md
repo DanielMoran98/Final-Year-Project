@@ -24,9 +24,13 @@ These instructions will get you a copy of the project up and running on your loc
 ## Built With
 
 * [Node.js](https://nodejs.org/en/) - JavaScript runtime environment
+* [JSON Web Tokens](https://jwt.io/) - System for representing claims securely between two parties
 * [NPM](https://www.npmjs.com/) - Package Manager
-* [Express.js](https://expressjs.com/) - Web Framework
-* [React](#) - Front-end Framework
+* [Express.js](https://expressjs.com/) - Node.js framework
+* [React](https://reactjs.org) - Front-end Framework
+* [Google Maps API](https://developers.google.com/maps/documentation) - API useful for everything location/map based
+* [Axios](https://github.com/axios/axios) - HTTP Request library
+* [Toastify](https://github.com/fkhadra/react-toastify) - React Toast library
 * [Materialize](https://materializecss.com/) - CSS Library
 * [MySQL](https://www.mysql.com/) - Database Management System
 * [Heroku](https://www.heroku.com/) - Hosting platform
