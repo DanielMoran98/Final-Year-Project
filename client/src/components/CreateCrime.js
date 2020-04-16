@@ -82,7 +82,7 @@ export class CreateCrime extends Component {
         }
 
         console.log(formData)
-        const response = await axios.post('/api/crime/create',formData , {headers: {'Authorization': "Bearer "+"a"+localStorage.getItem('jwtToken')}}).then(function(){
+        const response = await axios.post('/api/crime/create',formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
             console.log("done")
             toast(`Crime sent to the Gardaí`,{
                 type: toast.TYPE.INFO,
