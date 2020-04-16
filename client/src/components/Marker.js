@@ -37,7 +37,7 @@ class Marker extends Component {
 
       return ReactDOM.createPortal(
         <div className="markerContainer">
-              <CrimeInfo id={this.props.id} color={this.props.color} closeCrimeDialog={this.closeCrimeDialog} />
+              <CrimeInfo id={this.props.id} color={this.props.color} closeCrimeDialog={this.closeCrimeDialog} staffType={this.props.staffType}/>
         </div>
      ,
      root)

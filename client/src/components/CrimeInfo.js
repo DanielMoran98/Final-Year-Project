@@ -119,28 +119,10 @@ export class CrimeInfo extends Component {
                                 </ul>
                                 {/* <img src="images/gardaBackground.jpg"/> */}
                                 <div className={this.props.color + " box"} style={{height: "20vh"}}/>
-    {/*                             <
-                                <GoogleMapReact 
-                                        bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
-                                        defaultCenter={
-                                            {
-                                                lat: this.state.latitude,
-                                                lng:this.state.longitude
-                                            }
-                                            }
-                                        defaultZoom={13}
-                                        options={{    disableDefaultUI: true,
-                                            gestureHandling:"greedy"}}
-                                >
-                                    <Marker nameeee="testtt" id={this.state.id} lat={this.state.latitude} lng={this.state.longitude} color={this.state.color} />
 
-                                </GoogleMapReact> */}
-
-                                {/* Should this be a GoogleMapReact^^^ ? */}
                                 <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Crime #{this.state.id}</span>
                                 </div>
                                 <div className="card-content">
-                                {/* <GoogleMap/> */}
                                     </div>
 
                                     <div className="container">
@@ -161,11 +143,22 @@ export class CrimeInfo extends Component {
                                             </tbody>
                                         </table>
                                     </div>
-                                <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                    <a href="#" className="btn primary-background crime-card-button">Attend Crime</a>
-                                    <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}}>Create Report</a>
-                                    <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
-                                </div>
+                                {this.props.staffType == "dispatcher" ?
+                                    <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
+                                        <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
+                                    </div>
+                                  :
+                                   ''
+                                }
+                                {this.props.staffType == "garda" ?
+                                    <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
+                                        <a href="#" className="btn primary-background crime-card-button">Attend Crime</a>
+                                        <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}}>Create Report</a>
+                                        <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
+                                    </div>
+                                  :
+                                   ''
+                                }
                             </div>
                             </div>
                         </div>

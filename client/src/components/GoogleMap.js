@@ -35,7 +35,8 @@ class GoogleMap extends Component {
   state = {
     markers: [
 
-    ]
+    ],
+    renderCreateCrime: false
   };
 
 
@@ -101,6 +102,7 @@ class GoogleMap extends Component {
           bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
+          onClick = {this.props.onClick}
           options={
             {    
               disableDefaultUI: true,
@@ -114,7 +116,7 @@ class GoogleMap extends Component {
 
           {/* Populate map with markers from API / State */}
           {this.state.markers.map(i => {
-              return <Marker id={i.id} lat={i.lat} lng={i.lng} color={i.color} />
+              return <Marker id={i.id} lat={i.lat} lng={i.lng} color={i.color} staffType={this.props.staffType}/>
              
             })}
 
