@@ -85,10 +85,11 @@ app.post('/login', (req, res) => {
           badgeNumber: results[0].badgeNumber,
           rank: results[0].rank,
           email: results[0].email,
+          phone: results[0].phone,
           division_id: results[0].division_id
         }
 
-        jwt.sign(user, jwtSecret,{expiresIn: '40s'}, (err, token) => {
+        jwt.sign(user, jwtSecret,{expiresIn: '10m'}, (err, token) => {
           console.log("Login success!")
           res.json({
             token: token,
