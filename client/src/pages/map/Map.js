@@ -8,10 +8,13 @@ import {
   Link,
   useRouteMatch
 } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import GoogleMap from '../../components/GoogleMap';
 import SideNav from "../../components/SideNav";
 import CreateCrime from '../../components/CreateCrime';
+const axios = require('axios');
 
 class Map extends Component {
 
@@ -25,7 +28,6 @@ class Map extends Component {
   }
 
   onDispatcherClick=(obj)=>{
-
     this.setState({
       displayCreateCrime: true,
       crimeLat: obj.lat,
@@ -33,6 +35,60 @@ class Map extends Component {
      })
     console.log(obj.lng)
   }
+
+  onEmergencyButtonClick=()=>{
+    // Create crime on current location
+    if(navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoError);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+  }
+
+  async geoSuccess(position){
+    console.log("Success")
+    console.log(position.coords.longitude)
+
+    var formData = {
+      latitude: position.coords.latitude,
+      longitude: position.coords.longitude,
+      crimeType: "Distress Call",
+      crimeDescription: "Garda in need of assistance",
+      victimContact: localStorage.getItem("user_phone"),
+      urgency: 4,
+      dangers: "Unknown",
+      suspectDescription: "Unknown",
+      division_id: localStorage.getItem('user_division_id'),
+      staff_id: localStorage.getItem('user_id')
+  }
+
+  console.log(formData)
+  const response = await axios.post('/api/crime/create',formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
+      console.log("done")
+      toast(`Your emergency request has been sent to the Gardaí`,{
+          type: toast.TYPE.SUCCESS,
+          position: toast.POSITION.TOP_CENTER
+      });
+
+
+  }).catch(function(){
+      toast(`Emergency failed to send, you may have denied location access to the application`,{
+          type: toast.TYPE.ERROR,
+          position: toast.POSITION.TOP_CENTER
+      });
+  })
+
+  }
+  geoError(){
+    console.log("Error")
+    toast(`You have denied location permissions, this must be changed manually in your browser settings.`,{
+      type: toast.TYPE.ERROR,
+      position: toast.POSITION.TOP_CENTER
+    });
+  }
+
+ 
+
   closeCrimeDialog=()=>{
     this.setState({displayCreateCrime:false})
   }
@@ -59,7 +115,7 @@ class Map extends Component {
             <GoogleMap staffType={"garda"}/>
           </div>
             <div className="row footer">
-                  <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
+                  <div className="col s4"><a  onClick={()=>this.onEmergencyButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
                   <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
                   <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
               <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -98,9 +154,9 @@ class Map extends Component {
 
           </div>
             <div className="row footer">
-                  <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
+                  {/* <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
                   <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
-                  <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
+                  <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div> */}
               <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
               <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
             </div>
