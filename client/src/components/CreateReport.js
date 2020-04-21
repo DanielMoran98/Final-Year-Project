@@ -39,8 +39,6 @@ export class CreateReport extends Component {
 
     
     async componentDidMount(){
-
-
         this.setState({
 
         }, () => {this.setState({dataLoaded: true})});
@@ -76,13 +74,8 @@ export class CreateReport extends Component {
                 position: toast.POSITION.TOP_CENTER
             });
         })
-
-
-
-        console.log("Res: "+response)
         this.onExitClick()
 
- 
     }
 
     render() {

@@ -23,6 +23,7 @@ Client:
         Report:
             ✔ Create Report dialog component @done(20-04-21 19:41)
             ✔ Create report creation API @done(20-04-21 19:41)
+            ☐ View previously created reports
 
     Pages:
         Unit:
@@ -30,7 +31,8 @@ Client:
             ☐ Join units
     Other:
         ☐ Play audio notification on new crime https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_audio_play
-        https://medium.com/better-programming/everything-you-need-to-know-about-pwas-push-notifications-e870bb54e14f            
+        https://medium.com/better-programming/everything-you-need-to-know-about-pwas-push-notifications-e870bb54e14f
+        ☐ Update garda active status on login/logout            
 Bugs:
     ☐ Anchor point for markers is the top left of the image rather than bottom-center
 

@@ -23,7 +23,8 @@ class Map extends Component {
     super(props);
     this.state = {
         displayCreateCrime: false,
-        displayCreateReport: false
+        displayCreateReport: false,
+        activityState: "Busy"
     };
 
   // this.closeCrimeDialog = this.closeCrimeDialog.bind(this)
@@ -36,6 +37,15 @@ class Map extends Component {
       crimeLng: obj.lng
      })
     console.log(obj.lng)
+  }
+
+  onPursuitButtonClick=()=>{
+    // Create crime on current location
+    toast(`The pursuit feature will be available in a later version.`,{
+      type: toast.TYPE.INFO,
+      position: toast.POSITION.TOP_CENTER,
+
+    });  
   }
 
   onEmergencyButtonClick=()=>{
@@ -99,9 +109,19 @@ class Map extends Component {
   closeReportDialog=()=>{
     this.setState({displayCreateReport:false})
   }
+
+  toggleActivityState=()=>{
+    if(this.state.activityState == "Busy"){
+
+      this.setState({activityState:"Active"})
+
+    }else if(this.state.activityState == "Active"){
+
+      this.setState({activityState:"Busy"})
+    }
+  }
+
   render(){
-
-
 
     // GARDA ONLY
 
@@ -117,7 +137,14 @@ class Map extends Component {
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
           <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
-          <div className="col s2"><a className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">close</i></a><br/><span className="buttonLabel">Busy</span></div>
+          {this.state.activityState == "Busy" ?
+            <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">close</i></a><br/><span className="buttonLabel">Busy</span></div>
+          :
+            <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a><br/><span className="buttonLabel">Active</span></div>
+          }
+
+
+
         </div>
           <div id="GoogleMap">
             <GoogleMap staffType={"garda"}/>
@@ -131,7 +158,7 @@ class Map extends Component {
         }
             <div className="row footer">
                   <div className="col s4"><a onClick={()=>this.onEmergencyButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
-                  <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
+                  <div className="col s4"><a onClick={()=>this.onPursuitButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
                   <div className="col s4"><a onClick={()=>this.onReportButtonClick()}className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
               <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
               <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
@@ -155,8 +182,11 @@ class Map extends Component {
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
           <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
-          <div className="col s2"><a className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a><br/><span className="buttonLabel">On shift</span></div>
-        </div>
+          {this.state.activityState == "Busy" ?
+            <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">close</i></a><br/><span className="buttonLabel">Busy</span></div>
+          :
+            <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a><br/><span className="buttonLabel">Active</span></div>
+          }        </div>
           <div id="GoogleMap">
 
           <GoogleMap  onClick={this.onDispatcherClick} staffType={"dispatcher"} />
