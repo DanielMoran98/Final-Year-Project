@@ -1,38 +1,24 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import './SideNav.css'
-// import './CreateReport.css'
+import './CreateCrime.css'
 import GoogleMapReact from 'google-map-react'
 import GoogleMap from './GoogleMap.js'
 import Marker from './Marker.js'
 import M from 'materialize-css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const axios = require("axios")
 
 
-function createMapOptions(maps) {
-    // next props are exposed at maps
-    // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
-    // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
-    // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
-    // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
-    // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
-    return {
-      disableDefaultUI: true,
-      gestureHandling:"greedy"
-    };
-  }
   
 
 export class CreateReport extends Component {
-    static defaultProps = {
-        center: {
-          lat: 53.35,
-          lng: -6.26
-        },
-        zoom: 13,
-        height: "100vh",
-      };
+    constructor(props){
+        super(props);
+  
+    }
+
     state = {
         id: null,
         latitude: null,
@@ -51,46 +37,49 @@ export class CreateReport extends Component {
     }
 
 
+    
     async componentDidMount(){
-        const url = "/api/crime/"+this.props.id;
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data[0].crimeType)
+
 
         this.setState({
-            id: data[0].id,
-            latitude: data[0].latitude,
-            longitude: data[0].longitude,
-            datetime: data[0].datetime,
-            crimeType: data[0].crimeType,
-            crimeDescription: data[0].crimeDescription,
-            suspectDescription: data[0].suspectDescription,
-            dangers: data[0].dangers,
-            victimContact: data[0].victimContact,
-            urgency: data[0].urgency,
-            attendeeCount: data[0].attendeeCount,
-            status: data[0].status,
-            division_id: data[0].division_id
+
         }, () => {this.setState({dataLoaded: true})});
 
     }
 
     onExitClick(){
-        this.props.closeCrimeDialog();
+        this.props.closeReportDialog();
     }
 
-    async markResolved(id){
+    async createReport(){
+        var reportContent = document.getElementById("report_content").value
+        var formData = {
+            content: reportContent,           
+            staff_id: localStorage.getItem('user_id')
+        }
 
-        const url = `/api/crime/${id}/resolve`;
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data)
+        // console.log(formData)
+        // const response = await axios.post('/api/report/create',formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
+        //     console.log("done")
+        //     toast(`Report has been successfully stored`,{
+        //         type: toast.TYPE.INFO,
+        //         position: toast.POSITION.TOP_CENTER
+        //     });
+      
+      
+        // }).catch(function(){
+        //     toast(`Report failed to submit, check your connection and try again`,{
+        //         type: toast.TYPE.ERROR,
+        //         position: toast.POSITION.TOP_CENTER
+        //     });
+        // })
 
-        toast(`Crime #${id} marked as resolved.`,{
-            type: toast.TYPE.INFO,
-            position: toast.POSITION.TOP_CENTER
-        });
-        this.onExitClick()
+
+
+        // console.log("Res: "+response)
+        // this.onExitClick()
+
+ 
     }
 
     render() {
@@ -98,12 +87,15 @@ export class CreateReport extends Component {
         
         if(this.state.dataLoaded){
 
-            var dateDisplay = this.state.datetime.replace('Z','')
-            dateDisplay = dateDisplay.replace('T', ' ')
-            dateDisplay = dateDisplay.replace('.000', '')
-            var dateFormatted = new Date(Date.parse(dateDisplay))
+            // var dateDisplay = this.state.datetime.replace('Z','')
+            // dateDisplay = dateDisplay.replace('T', ' ')
+            // dateDisplay = dateDisplay.replace('.000', '')
+            var date = new Date()
+            var dateFormatted = date.getHours+":"+date.getMinutes+":"+date.getSeconds+" GMT"
             
-
+            var now = new Date();
+            var todaysdate = now.getDate() + "-" + now.getMonth() + "-" + now.getFullYear()
+            var time = now.getHours() + ":" + now.getMinutes() + ":" + now.getUTCSeconds()+ " GMT";
             return (
                 <div className="col s10 m6 offset-s1 offset-m3" style={{display:"block",position:"absolute", top:"15px", zIndex:"5", left:"0", right:"0"}} className="center-align">
                     <div className="container">
@@ -114,57 +106,58 @@ export class CreateReport extends Component {
                                 <div className="card-image" style={{height: "20%"}}>
                                 <ul style={{position: "absolute", zIndex: "5", left: "15px"}}>
                                     <li>
-                                    <button className="btn-floating btn-large waves-effect " onClick={() => this.props.closeCrimeDialog()}><i className={this.props.color + " material-icons"} style={{color:"white", fontSize: "45px"}}>arrow_back</i></button>
+                                    <button className="btn-floating btn-large waves-effect " onClick={() => this.props.closeReportDialog()}><i className={"blue" + " material-icons"} style={{color:"white", fontSize: "45px"}}>arrow_back</i></button>
                                     </li>
                                 </ul>
-                                {/* <img src="images/gardaBackground.jpg"/> */}
-                                <div className={this.props.color + " box"} style={{height: "20vh"}}/>
-    {/*                             <
-                                <GoogleMapReact 
-                                        bootstrapURLKeys={{ key: "AIzaSyA7qsNPuWR4K4RncWMv1sFfxUIJG-7zOh0" }}
-                                        defaultCenter={
-                                            {
-                                                lat: this.state.latitude,
-                                                lng:this.state.longitude
-                                            }
-                                            }
-                                        defaultZoom={13}
-                                        options={{    disableDefaultUI: true,
-                                            gestureHandling:"greedy"}}
-                                >
-                                    <Marker nameeee="testtt" id={this.state.id} lat={this.state.latitude} lng={this.state.longitude} color={this.state.color} />
+                                <div className={"blue" + " box"} style={{height: "20vh"}}/>
 
-                                </GoogleMapReact> */}
-
-                                {/* Should this be a GoogleMapReact^^^ ? */}
-                                <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Crime #{this.state.id}</span>
+                                <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Create Report</span>
                                 </div>
                                 <div className="card-content">
-                                {/* <GoogleMap/> */}
                                     </div>
 
                                     <div className="container">
-                                        <table id="crimeInfoTable">
+                                        <table id="createReportTable">
                                             <thead>
 
                                             </thead>
                                             <tbody>
-                                                <tr><th rowSpan="2"><p style={{fontWeight:"bold", textAlign:"center"}}>{dateFormatted.toGMTString().replace("\"", "")}</p></th></tr>
-                                                <tr><th>Crime</th><td>{this.state.crimeType}</td></tr>
-                                                <tr><th>Description</th><td>{this.state.crimeDescription}</td></tr>
-                                                <tr><th>Contact</th><td>{this.state.victimContact}</td></tr>
-                                                <tr><th>Urgency</th><td>Level {this.state.urgency}</td></tr>
-                                                <tr><th>Dangers</th><td>{this.state.dangers}</td></tr>
-                                                <tr><th>Suspect(s)</th><td>{this.state.suspectDescription}</td></tr>
-                                                <tr><th>Status</th><td>{this.state.status}</td></tr>
-                                                <tr><th>Attending</th><td>{this.state.attendeeCount} Units</td></tr>
+                                                {/* <tr><th rowSpan="1"><p style={{fontWeight:"bold", textAlign:"center"}}>{now.toUTCString()}</p></th></tr> */}
+                                                <tr><th>Date</th>
+                                                <td colSpan="2">
+                                                <div className="input-field col s10">
+                                                    <input id="report_date" type="text" className="validate disabled" value={todaysdate} disabled required />
+                                                    <label htmlFor="report_date"></label>
+                                                </div>
+                                                </td></tr>
+                                                <tr><th>Time</th>
+                                                <td colSpan="2"><div className="input-field col s10">
+                                                    <input id="report_time" type="text" className="validate disabled" value={time} disabled required/>
+                                                    <label htmlFor="report_time"></label>
+                                                </div></td></tr>
+                                                <tr><th>Garda</th>
+                                                <td colSpan="2"><div className="input-field col s10">
+                                                    <input id="report_garda" type="text" className="validate disabled" value={localStorage.getItem('user_name')} disabled required/>
+                                                    <label htmlFor="report_garda"></label>
+                                                </div></td></tr>
+                                                <tr><th>Crime ID</th>
+                                                <td colSpan="2"><div className="input-field col s10">
+                                                    <input id="report_crimeid" type="text" className="validate disabled" required/>
+                                                    <label htmlFor="report_crimeid">Crime ID <small>(Optional)</small></label>
+                                                </div></td></tr>
+                                                <tr><th>Report</th>
+                                                <td colSpan="2"><div className="input-field col s10">
+                                                    <textarea id="report_content" class="validate" style={{height:200}}></textarea>
+                                                    <label for="report_content" style={{marginLeft:5, marginBottom:5}}>Report Content</label>
+                                                </div></td></tr>
+                                                
+
                                             </tbody>
                                         </table>
                                     </div>
                                 <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                    <a href="#" className="btn primary-background crime-card-button">Attend Crime</a>
-                                    <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}}>Create Report</a>
-                                    <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
+                                    <a href="#"  className="btn primary-background crime-card-button" style={{marginRight: 20}} onClick={() => this.createReport()}>Submit</a>
+                                    <a href="#" className="btn red crime-card-button" onClick={() => this.props.closeReportDialog()}>Cancel</a>
                                 </div>
                             </div>
                             </div>
@@ -173,7 +166,7 @@ export class CreateReport extends Component {
                 </div>
             )
         }else{
-            return null;
+            return (<div>CreateReport not loaded</div>);
         }
     }
 }

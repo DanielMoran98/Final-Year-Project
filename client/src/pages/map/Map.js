@@ -14,6 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import GoogleMap from '../../components/GoogleMap';
 import SideNav from "../../components/SideNav";
 import CreateCrime from '../../components/CreateCrime';
+import CreateReport from '../../components/CreateReport';
 const axios = require('axios');
 
 class Map extends Component {
@@ -21,7 +22,8 @@ class Map extends Component {
   constructor(props){
     super(props);
     this.state = {
-        displayCreateCrime: false
+        displayCreateCrime: false,
+        displayCreateReport: false
     };
 
   // this.closeCrimeDialog = this.closeCrimeDialog.bind(this)
@@ -87,12 +89,16 @@ class Map extends Component {
     });
   }
 
- 
+  onReportButtonClick=()=>{
+    this.setState({displayCreateReport:true})
+  }
 
   closeCrimeDialog=()=>{
     this.setState({displayCreateCrime:false})
   }
-
+  closeReportDialog=()=>{
+    this.setState({displayCreateReport:false})
+  }
   render(){
 
 
@@ -106,6 +112,8 @@ class Map extends Component {
         
         <div id="mapPageContainer">
         <Route path="/map" exact component={SideNav}/>
+
+
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
           <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
@@ -114,10 +122,17 @@ class Map extends Component {
           <div id="GoogleMap">
             <GoogleMap staffType={"garda"}/>
           </div>
+
+          { this.state.displayCreateReport == true &&
+          <div className="createReportDialog">
+            <CreateReport closeReportDialog={this.closeReportDialog}/>
+          </div>
+
+        }
             <div className="row footer">
-                  <div className="col s4"><a  onClick={()=>this.onEmergencyButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
+                  <div className="col s4"><a onClick={()=>this.onEmergencyButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
                   <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
-                  <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
+                  <div className="col s4"><a onClick={()=>this.onReportButtonClick()}className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
               <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
               <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
             </div>
@@ -136,6 +151,7 @@ class Map extends Component {
      return(
       <div id="mapPageContainer">
         <Route path="/map" exact component={SideNav}/>
+        
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
           <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
