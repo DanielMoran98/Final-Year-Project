@@ -53,31 +53,34 @@ export class CreateReport extends Component {
 
     async createReport(){
         var reportContent = document.getElementById("report_content").value
+        var crimeID = document.getElementById("report_crimeid").value
         var formData = {
             content: reportContent,           
-            staff_id: localStorage.getItem('user_id')
+            staff_id: localStorage.getItem('user_id'),
+            crime_id: crimeID
         }
 
-        // console.log(formData)
-        // const response = await axios.post('/api/report/create',formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
-        //     console.log("done")
-        //     toast(`Report has been successfully stored`,{
-        //         type: toast.TYPE.INFO,
-        //         position: toast.POSITION.TOP_CENTER
-        //     });
+        console.log(formData)
+
+        const response = await axios.post('/api/report/create',formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
+            console.log("done")
+            toast(`Report has been successfully stored`,{
+                type: toast.TYPE.INFO,
+                position: toast.POSITION.TOP_CENTER
+            });
       
       
-        // }).catch(function(){
-        //     toast(`Report failed to submit, check your connection and try again`,{
-        //         type: toast.TYPE.ERROR,
-        //         position: toast.POSITION.TOP_CENTER
-        //     });
-        // })
+        }).catch(function(){
+            toast(`Report failed to submit, check your connection and try again`,{
+                type: toast.TYPE.ERROR,
+                position: toast.POSITION.TOP_CENTER
+            });
+        })
 
 
 
-        // console.log("Res: "+response)
-        // this.onExitClick()
+        console.log("Res: "+response)
+        this.onExitClick()
 
  
     }
@@ -87,9 +90,6 @@ export class CreateReport extends Component {
         
         if(this.state.dataLoaded){
 
-            // var dateDisplay = this.state.datetime.replace('Z','')
-            // dateDisplay = dateDisplay.replace('T', ' ')
-            // dateDisplay = dateDisplay.replace('.000', '')
             var date = new Date()
             var dateFormatted = date.getHours+":"+date.getMinutes+":"+date.getSeconds+" GMT"
             
@@ -142,13 +142,13 @@ export class CreateReport extends Component {
                                                 </div></td></tr>
                                                 <tr><th>Crime ID</th>
                                                 <td colSpan="2"><div className="input-field col s10">
-                                                    <input id="report_crimeid" type="text" className="validate disabled" required/>
+                                                    <input id="report_crimeid" type="number" className="validate disabled" required/>
                                                     <label htmlFor="report_crimeid">Crime ID <small>(Optional)</small></label>
                                                 </div></td></tr>
                                                 <tr><th>Report</th>
                                                 <td colSpan="2"><div className="input-field col s10">
-                                                    <textarea id="report_content" class="validate" style={{height:200}}></textarea>
-                                                    <label for="report_content" style={{marginLeft:5, marginBottom:5}}>Report Content</label>
+                                                    <textarea id="report_content" className="validate" style={{height:200}}></textarea>
+                                                    <label htmlFor="report_content" style={{marginLeft:5, marginBottom:5}}>Report Content</label>
                                                 </div></td></tr>
                                                 
 

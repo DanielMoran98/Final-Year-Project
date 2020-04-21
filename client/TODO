@@ -14,14 +14,15 @@ Client:
 
         CrimeInfo:
             ☐ Attend Button Functionality
-            ☐ Create Report Functionality
+            ✔ Create Report Functionality @done(20-04-21 19:41)
             
         SideNav:
             ☐ My reports - Filter reports by user
             ☐ Information - Dialog box explaining system
             ☐ Settings - None for now
         Report:
-            ☐ Create Report dialog component
+            ✔ Create Report dialog component @done(20-04-21 19:41)
+            ✔ Create report creation API @done(20-04-21 19:41)
 
     Pages:
         Unit:

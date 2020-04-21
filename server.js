@@ -191,7 +191,7 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
   let query = db.query(sql, (err, result) => {
     if(err) throw err;
 
-    res.send("something")
+    res.send("Error")
     conn.end();
   });
 });
@@ -218,6 +218,27 @@ app.get('/api/crime/:id/resolve', (req,res) => {
     }else{
       res.json("Crime #"+req.params.id+" doesn't exist.");
     }
+    conn.end();
+  });
+});
+
+// REPORTS
+
+app.post('/api/report/create', verifyToken, (req,res) => {
+
+  var content = req.body.content;
+  var staff_id = req.body.staff_id;
+  var crime_id = req.body.crime_id;
+
+  // if(typeof crime_id != undefined && crime_id != "")
+  var sql = SqlString.format('INSERT INTO report(content, staff_id, crime_id) VALUES(?,?,?)', [content, staff_id, crime_id])
+  const db = mysql.createConnection(dbCredentials);
+  var conn = db;
+
+  let query = db.query(sql, (err, result) => {
+    if(err) throw err;
+
+    res.send("Error")
     conn.end();
   });
 });
