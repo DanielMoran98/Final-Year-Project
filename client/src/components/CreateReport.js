@@ -142,8 +142,8 @@ export class CreateReport extends Component {
                                                 </div></td></tr>
                                                 <tr><th>Crime ID</th>
                                                 <td colSpan="2"><div className="input-field col s10">
-                                                    <input id="report_crimeid" type="number" className="validate disabled" required/>
-                                                    <label htmlFor="report_crimeid">Crime ID <small>(Optional)</small></label>
+                                                    <input id="report_crimeid" type="number" className="" value={this.props.crime_id} required/>
+                                                    <label htmlFor="report_crimeid" className="active">Crime ID <small>(Optional)</small></label>
                                                 </div></td></tr>
                                                 <tr><th>Report</th>
                                                 <td colSpan="2"><div className="input-field col s10">

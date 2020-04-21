@@ -4,24 +4,15 @@ import './SideNav.css'
 import './CrimeInfo.css'
 import GoogleMapReact from 'google-map-react'
 import GoogleMap from './GoogleMap.js'
+import CreateReport from './CreateReport'
+
 import Marker from './Marker.js'
 import M from 'materialize-css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-function createMapOptions(maps) {
-    // next props are exposed at maps
-    // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
-    // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
-    // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
-    // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
-    // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
-    return {
-      disableDefaultUI: true,
-      gestureHandling:"greedy"
-    };
-  }
+
   
 
 export class CrimeInfo extends Component {
@@ -48,6 +39,7 @@ export class CrimeInfo extends Component {
         status: null,
         division_id: null,
         dataLoaded: false,
+        displayCreateReport:false
     }
 
 
@@ -55,7 +47,6 @@ export class CrimeInfo extends Component {
         const url = "/api/crime/"+this.props.id;
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data[0].crimeType)
 
         this.setState({
             id: data[0].id,
@@ -79,12 +70,18 @@ export class CrimeInfo extends Component {
         this.props.closeCrimeDialog();
     }
 
+    closeReportDialog=()=>{
+        this.setState({displayCreateReport: false})
+    }    
+    openReportDialog=()=>{
+        this.setState({displayCreateReport: true})
+    }
+
     async markResolved(id){
 
         const url = `/api/crime/${id}/resolve`;
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data)
 
         toast(`Crime #${id} marked as resolved.`,{
             type: toast.TYPE.INFO,
@@ -153,7 +150,7 @@ export class CrimeInfo extends Component {
                                 {this.props.staffType == "garda" ?
                                     <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
                                         <a href="#" className="btn primary-background crime-card-button">Attend Crime</a>
-                                        <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}}>Create Report</a>
+                                        <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}} onClick={() => this.openReportDialog()}>Create Report</a>
                                         <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
                                     </div>
                                   :
@@ -163,6 +160,12 @@ export class CrimeInfo extends Component {
                             </div>
                         </div>
                     </div>
+                    { this.state.displayCreateReport == true &&
+                        <div className="createReportDialog">
+                            <CreateReport closeReportDialog={this.closeReportDialog} crime_id={this.state.id}/>
+                        </div>
+                    }
+
                 </div>
             )
         }else{
