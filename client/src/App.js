@@ -9,6 +9,8 @@ import CrimeInfo from './components/CrimeInfo';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateCrime from './components/CreateCrime';
+import { Notifications } from 'react-push-notification';
+
 const axios = require('axios');
 
 toast.configure()
@@ -21,7 +23,7 @@ function App() {
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     </div>
-
+    <Notifications />
     <Router>
       <Route path="/" exact component={Login} />
       <Route path="/map" exact component={Map} />

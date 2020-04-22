@@ -15,6 +15,8 @@ import GoogleMap from '../../components/GoogleMap';
 import SideNav from "../../components/SideNav";
 import CreateCrime from '../../components/CreateCrime';
 import CreateReport from '../../components/CreateReport';
+import addNotification from 'react-push-notification';
+
 const axios = require('axios');
 
 class Map extends Component {
@@ -44,8 +46,15 @@ class Map extends Component {
     toast(`The pursuit feature will be available in a later version.`,{
       type: toast.TYPE.INFO,
       position: toast.POSITION.TOP_CENTER,
-
     });  
+
+    addNotification({
+      title: 'Warning',
+      subtitle: 'This is a subtitle',
+      message: 'This is a very long message',
+      theme: 'darkblue',
+      native: true // when using native, your OS will handle theming.
+  });
   }
 
   onEmergencyButtonClick=()=>{
