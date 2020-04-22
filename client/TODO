@@ -10,19 +10,15 @@ Client:
     Components:
         GoogleMap:
             ☐ Show current location
-            ✔ Emergency button create crime on current location @done(20-04-20 22:24)
 
         CrimeInfo:
             ☐ Attend Button Functionality
-            ✔ Create Report Functionality @done(20-04-21 19:41)
             
         SideNav:
             ☐ My reports - Filter reports by user
             ☐ Information - Dialog box explaining system
             ☐ Settings - None for now
         Report:
-            ✔ Create Report dialog component @done(20-04-21 19:41)
-            ✔ Create report creation API @done(20-04-21 19:41)
             ☐ View previously created reports
 
     Pages:
@@ -32,22 +28,28 @@ Client:
     Other:
         ☐ Play audio notification on new crime https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_audio_play
         https://medium.com/better-programming/everything-you-need-to-know-about-pwas-push-notifications-e870bb54e14f
-        ☐ Update garda active status on login/logout            
+        ☐ Update garda active status on login/logout 
+        ✔ Add favicon @done(20-04-22 21:44)
+          
 Bugs:
     ☐ Anchor point for markers is the top left of the image rather than bottom-center
 
 Main:
-    ☐ Create reports for gardai
     ☐ View reports by gardai number
-
+    
 Archive:
+  ✔ Emergency button create crime on current location @done(20-04-20 22:24) @project(Client.Components.GoogleMap)
+  ✔ Create Report Functionality @done(20-04-21 19:41) @project(Client.Components.CrimeInfo)
+  ✔ Create Report dialog component @done(20-04-21 19:41) @project(Client.Components.Report)
+  ✔ Create report creation API @done(20-04-21 19:41) @project(Client.Components.Report)
+  ✔ Create reports for gardai @done(20-04-22 13:43) @project(Main)
   ✔ Add unique key prop to each marker @done(20-04-16 22:45) @project(Client.Components.Marker)
   ✔ Dynamically update markers @done(20-04-16 23:33) @project(Client.Components.Marker)
   ✔ Implement Role Based Access Control @done(20-04-16 22:27) @project(API.Auth)
   ✔ Update crime table to contain staff_id @done(20-04-16 22:28) @project(Database)
   ✔ End Patrol - Logout, disband unit @done(20-04-16 22:28) @project(Client.Components.SideNav)
-  ✔ Add component @done(20-04-16 22:29) @project(Client.Components.CreateCrime)
-  ✔ Connect to backend @done(20-04-16 22:29) @project(Client.Components.CreateCrime)
+  ✔ Add CreateCrime component @done(20-04-16 22:29) @project(Client.Components.CreateCrime)
+  ✔ CreateCrime Connect to backend @done(20-04-16 22:29) @project(Client.Components.CreateCrime)
   ✔ SideNav button only working on refresh @done(20-04-16 22:28) @project(Bugs)
   ✔ Connect to API @done(20-04-06 10:01) @project(Client.Pages.Login)
   ✔ React portal now moves marker to root along with the crime-dialog modal @done(20-04-06 09:56) @project(Bugs)
