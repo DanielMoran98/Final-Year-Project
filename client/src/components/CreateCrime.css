@@ -38,3 +38,26 @@
     height: 20vh;
   }
   
+  input[type="radio"].priority1:checked + span:after{
+    background-color: #4CAF50 ;
+    /* border:#4CAF50 ; */
+    border: #5a5a5a;
+  }
+  input[type="radio"].priority2:checked + span:after{
+    background-color: #ecc312;
+    /* border:#ffeb3b; */
+    border: #5a5a5a;
+  }
+  input[type="radio"].priority3:checked + span:after{
+    background-color: #ff9800;
+    /* border: #ff9800; */
+    border: #5a5a5a;
+  }
+  input[type="radio"].priority4:checked + span:after{
+    background-color: #F44336;
+    /* border: #F44336; */
+    border: #5a5a5a;
+  }    
+
+
+  

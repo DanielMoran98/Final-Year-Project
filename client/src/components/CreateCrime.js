@@ -67,14 +67,16 @@ export class CreateCrime extends Component {
     }
 
     async createCrime(){
-        
+
+        var urgency = document.querySelector('input[name="urgency_group"]:checked').value;
+
         var formData = {
             latitude: this.props.crimeLat,
             longitude: this.props.crimeLng,
             crimeType: document.getElementById("crime_crime").value,
             crimeDescription: document.getElementById("crime_description").value,
             victimContact: document.getElementById("crime_victim").value,
-            urgency: document.getElementById("crime_urgency").value,
+            urgency: urgency,
             dangers: document.getElementById("crime_dangers").value,
             suspectDescription: document.getElementById("crime_suspect").value,
             division_id: localStorage.getItem('user_division_id'),
@@ -99,7 +101,7 @@ export class CreateCrime extends Component {
 
 
 
-        console.log("Res: "+response)
+        // console.log("Res: "+response)
         this.onExitClick()
 
  
@@ -163,8 +165,32 @@ export class CreateCrime extends Component {
                                                 </div></td></tr>
                                                 <tr><th>Urgency</th>
                                                 <td> <div className="input-field col s10">
-                                                    <input id="crime_urgency" type="number" className="validate" min="1" max="4" required/>
-                                                    <label htmlFor="crime_urgency">Urgency Level (1-4)</label>
+                                                    
+                                                <p>
+                                                    <label>
+                                                        <input name="urgency_group" type="radio" className="priority1" value="1" defaultChecked />
+                                                        <span>Low-priority</span>
+                                                    </label>
+                                                    </p>
+                                                    <p>
+                                                    <label>
+                                                        <input name="urgency_group" type="radio" className="priority2" value="2" />
+                                                        <span>Medium-priority</span>
+                                                    </label>
+                                                </p>
+                                                <p>
+                                                    <label>
+                                                        <input name="urgency_group" type="radio" className="priority3" value="3"/>
+                                                        <span>High-priority</span>
+                                                    </label>
+                                                    </p>
+                                                    <p>
+                                                    <label>
+                                                        <input name="urgency_group" type="radio" className="priority4" value="4" />
+                                                        <span>Urgent-priority</span>
+                                                    </label>
+                                                </p>
+
                                                 </div></td></tr>
                                                 <tr><th>Dangers</th>
                                                 <td><div className="input-field col s10">
