@@ -45,8 +45,9 @@ class GoogleMap extends Component {
 
   async getMarkers(){
     try {
-      const response = await axios.post('/api/crime/all', "", {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
+      const response = await axios.post('/api/crime/division/post', {division_id: localStorage.getItem("user_division_id")}, {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
       var data = response.data
+
       //Create a copy of the current markers array
       var newMarkers = []
       for(var i = 0; i < data.length ; i++){
@@ -77,6 +78,9 @@ class GoogleMap extends Component {
           newMarkers.push(marker);
         }
       }
+      
+      if(newMarkers.length == 0){this.setState({noCrimes: true})}
+
       // Update the state with the new array
       this.setState({markers: newMarkers});
 
@@ -106,7 +110,7 @@ class GoogleMap extends Component {
   
   render() {
 
-    if (this.state.markers.length > 0) {
+    if (this.state.markers.length > 0 || this.state.noCrimes == true) {
 
     return (
       
@@ -147,7 +151,7 @@ class GoogleMap extends Component {
       </div>
     );
   } else {
-    return <div style={{position:"fixed", left:"50%", top:"50%"}}>LOADING</div> 
+    return <div style={{position:"fixed", left:"50%", top:"50%"}}>LOADING!</div> 
   }
   }
 }

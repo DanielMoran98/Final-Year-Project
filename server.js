@@ -89,7 +89,7 @@ app.post('/login', (req, res) => {
           division_id: results[0].division_id
         }
 
-        jwt.sign(user, jwtSecret,{expiresIn: '10m'}, (err, token) => {
+        jwt.sign(user, jwtSecret,{expiresIn: '60m'}, (err, token) => {
           console.log("Login success!")
           res.json({
             token: token,
@@ -154,7 +154,6 @@ app.post('/api/crime/all', verifyToken,(req,res) => {
         });
     }
   });
-  
 });
 
 app.get('/api/crime/:id', (req,res) => {
@@ -171,6 +170,27 @@ app.get('/api/crime/:id', (req,res) => {
       res.send("No results");
     }
     conn.end();
+  });
+});
+
+app.post('/api/crime/division/post', verifyToken,(req,res) => {
+  // console.log(req.body.division_id)
+  var division = req.body.division_id;
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        var sql = SqlString.format('SELECT * FROM crime WHERE division_id = ?', [division])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          res.send(result);
+          conn.end();
+        });
+    }
   });
 });
 
