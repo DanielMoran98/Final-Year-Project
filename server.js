@@ -173,7 +173,7 @@ app.get('/api/crime/:id', (req,res) => {
   });
 });
 
-app.post('/api/crime/division/post', verifyToken,(req,res) => {
+app.post('/api/crime/division', verifyToken,(req,res) => {
   // console.log(req.body.division_id)
   var division = req.body.division_id;
 

@@ -5,6 +5,7 @@ import CrimeInfo from './CrimeInfo';
 import M from 'materialize-css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import addNotification from 'react-push-notification';
 
 const axios = require('axios');
 
@@ -45,7 +46,7 @@ class GoogleMap extends Component {
 
   async getMarkers(){
     try {
-      const response = await axios.post('/api/crime/division/post', {division_id: localStorage.getItem("user_division_id")}, {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
+      const response = await axios.post('/api/crime/division', {division_id: localStorage.getItem("user_division_id")}, {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
       var data = response.data
 
       //Create a copy of the current markers array
@@ -78,9 +79,19 @@ class GoogleMap extends Component {
           newMarkers.push(marker);
         }
       }
-      
+
+      // If there are no active crimes, set noCrimes to true
       if(newMarkers.length == 0){this.setState({noCrimes: true})}
 
+      if(this.state.markers.length != 0 && this.state.markers.length < newMarkers.length){
+        addNotification({
+          title: 'A new crime has been reported near your location',
+          subtitle: 'New crime alert',
+          message: 'A crime report has been added close to your location, check your map to see if you can help.',
+          theme: 'darkblue',
+          native: true // when using native, your OS will handle theming.
+       });
+      }
       // Update the state with the new array
       this.setState({markers: newMarkers});
 
