@@ -146,8 +146,7 @@ class Map extends Component {
         return (
         
         <div id="mapPageContainer">
-        <Route path="/map" exact component={SideNav}/>
-
+        <SideNav staffType={"garda"}/>
 
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
@@ -192,7 +191,7 @@ class Map extends Component {
     else if(localStorage.getItem('user_staffType') == "dispatcher"){
      return(
       <div id="mapPageContainer">
-        <Route path="/map" exact component={SideNav}/>
+        <SideNav staffType={"dispatcher"}/>
         
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
