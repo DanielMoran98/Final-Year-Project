@@ -12,23 +12,20 @@ Client:
             ☐ Show current location
 
         CrimeInfo:
-            ☐ Attend Button Functionality
+            ✔ Attend Button Functionality @done(20-04-28 03:55)
             
         SideNav:
             ☐ My reports - Filter reports by user
-            ☐ Information - Dialog box explaining system
+            ✔ Information - Dialog box explaining system @done(20-04-28 02:04)
             ☐ Settings - None for now
         Report:
             ☐ View previously created reports
 
     Pages:
-        Unit:
-            ☐ Create units
-            ☐ Join units
+
     Other:
-        ☐ Play audio notification on new crime https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_audio_play
-        https://medium.com/better-programming/everything-you-need-to-know-about-pwas-push-notifications-e870bb54e14f
-        ☐ Update garda active status on login/logout 
+        ✔ Trigger push notification on new crime @done(20-04-28 02:04)
+        ✔ Update garda active status on login/logout @done(20-04-28 02:03)
         ✔ Add favicon @done(20-04-22 21:44)
           
 Bugs:

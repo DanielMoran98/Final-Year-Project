@@ -9,22 +9,6 @@ import addNotification from 'react-push-notification';
 
 const axios = require('axios');
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-
-function createMapOptions(maps) {
-  // next props are exposed at maps
-  // "Animation", "ControlPosition", "MapTypeControlStyle", "MapTypeId",
-  // "NavigationControlStyle", "ScaleControlStyle", "StrokePosition", "SymbolPath", "ZoomControlStyle",
-  // "DirectionsStatus", "DirectionsTravelMode", "DirectionsUnitSystem", "DistanceMatrixStatus",
-  // "DistanceMatrixElementStatus", "ElevationStatus", "GeocoderLocationType", "GeocoderStatus", "KmlLayerStatus",
-  // "MaxZoomStatus", "StreetViewStatus", "TransitMode", "TransitRoutePreference", "TravelMode", "UnitSystem"
-  return {
-    disableDefaultUI: true,
-    gestureHandling:"greedy",
-    clickableIcons: false
-  };
-}
 
 class GoogleMap extends Component {
   static defaultProps = {
@@ -52,8 +36,10 @@ class GoogleMap extends Component {
       //Create a copy of the current markers array
       var newMarkers = []
       for(var i = 0; i < data.length ; i++){
+        // For all active crimes
         if(data[i].status == "active"){
           var newColor = ""
+          // Translate urgency values into colours
           switch (data[i].urgency) {
             case 1:
               newColor = "green";

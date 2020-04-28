@@ -11,6 +11,7 @@ import M from 'materialize-css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+const axios = require('axios');
 
 
   
@@ -44,25 +45,64 @@ export class CrimeInfo extends Component {
 
 
     async componentDidMount(){
-        const url = "/api/crime/"+this.props.id;
-        const response = await fetch(url);
-        const data = await response.json();
 
-        this.setState({
-            id: data[0].id,
-            latitude: data[0].latitude,
-            longitude: data[0].longitude,
-            datetime: data[0].datetime,
-            crimeType: data[0].crimeType,
-            crimeDescription: data[0].crimeDescription,
-            suspectDescription: data[0].suspectDescription,
-            dangers: data[0].dangers,
-            victimContact: data[0].victimContact,
-            urgency: data[0].urgency,
-            attendeeCount: data[0].attendeeCount,
-            status: data[0].status,
-            division_id: data[0].division_id
-        }, () => {this.setState({dataLoaded: true})});
+        // Get crime details 
+        const response = await axios.get('/api/crime/'+this.props.id, {} , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then((response) =>{
+
+            this.setState({
+                id: response.data[0].id,
+                latitude: response.data[0].latitude,
+                longitude: response.data[0].longitude,
+                datetime: response.data[0].datetime,
+                crimeType: response.data[0].crimeType,
+                crimeDescription: response.data[0].crimeDescription,
+                suspectDescription: response.data[0].suspectDescription,
+                dangers: response.data[0].dangers,
+                victimContact: response.data[0].victimContact,
+                urgency: response.data[0].urgency,
+                attendeeCount: response.data[0].attendeeCount,
+                status: response.data[0].status,
+                division_id: response.data[0].division_id
+
+                
+            });
+      
+            
+        }).catch(function(error){
+            console.error(error)
+            toast(`Failed to retrieve data from server.`,{
+                type: toast.TYPE.ERROR,
+                position: toast.POSITION.TOP_CENTER
+            });
+        })
+
+        // Check if user is already attending this crime
+        // Check if user is attending already
+        var data = {
+            crime_id: this.props.id,
+            staff_id: localStorage.getItem('user_id')
+        }
+
+        const res = await axios.post('/api/assignment/checkattendance', data , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then((res) =>{
+            console.log(res.data)
+            if(res.data == "Attending"){
+                this.setState({attendingCrime: true},() => {
+                    this.setState({dataLoaded: true})
+                }) 
+            }else{
+                this.setState({attendingCrime: false}, () => {
+                    this.setState({dataLoaded: true})
+                }) 
+            }
+            
+        }).catch(function(error){
+            console.error(error)
+            toast(`Failed to retrieve data from server.`,{
+                type: toast.TYPE.ERROR,
+                position: toast.POSITION.TOP_CENTER
+            });
+        })
+
 
     }
 
@@ -78,12 +118,27 @@ export class CrimeInfo extends Component {
     }
 
     async markResolved(id){
+        const response = await axios.get(`/api/crime/${id}/resolve`, {} , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
 
-        const url = `/api/crime/${id}/resolve`;
-        const response = await fetch(url);
-        const data = await response.json();
 
         toast(`Crime #${id} marked as resolved.`,{
+            type: toast.TYPE.INFO,
+            position: toast.POSITION.TOP_CENTER
+        });
+        this.onExitClick()
+    }
+
+    async markAttending(crime_id, staff_id){
+        var postData = {
+            crime_id: crime_id,
+            staff_id: staff_id
+        }
+        console.log(postData)
+        const response = await axios.post(`/api/assignment/create`, postData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
+
+
+
+        toast(`You have marked yourself as attending Crime #${crime_id}.`,{
             type: toast.TYPE.INFO,
             position: toast.POSITION.TOP_CENTER
         });
@@ -149,8 +204,13 @@ export class CrimeInfo extends Component {
                                 }
                                 {this.props.staffType == "garda" ?
                                     <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                        <a href="#" className="btn primary-background crime-card-button">Attend Crime</a>
-                                        <a href="#" className="btn primary-background crime-card-button" style={{margin: "15px"}} onClick={() => this.openReportDialog()}>Create Report</a>
+                                        {!this.state.attendingCrime ?
+                                            <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markAttending(this.props.id, localStorage.getItem('user_id'))}>Attend Crime</a>
+                                         :
+                                         <div></div>
+                                         }
+                                        {/* <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markAttending(this.props.id, localStorage.getItem('user_id'))}>Attend Crime</a> */}
+                                        <a href="#" className="btn primary-background crime-card-button" onClick={() => this.openReportDialog()} style={{margin: "15px"}}>Create Report</a>
                                         <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
                                     </div>
                                   :

@@ -201,7 +201,68 @@ app.post('/api/staff/setstatus', verifyToken, (req,res) => {
   });
 });
 
+//////////// ASSIGNMENTS ////////////
 
+
+app.post('/api/assignment/create', verifyToken, (req,res) => {
+
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        crime_id = sanitizer.sanitize(req.body.crime_id)
+        staff_id = sanitizer.sanitize(req.body.staff_id)
+        console.log(crime_id, staff_id)
+
+        var sql = SqlString.format('INSERT INTO assignment(crime_id, staff_id) VALUES(?,?)', [crime_id, staff_id])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          sql = SqlString.format(`UPDATE crime SET attendeeCount = attendeeCount + 1 WHERE id=?`, [crime_id])
+
+          let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+
+            res.send("Success")
+          });
+          conn.end();
+        });
+    }
+  });
+});
+
+app.post('/api/assignment/checkattendance', verifyToken, (req,res) => {
+
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        crime_id = sanitizer.sanitize(req.body.crime_id)
+        staff_id = sanitizer.sanitize(req.body.staff_id)
+        console.log(crime_id, staff_id)
+
+        var sql = SqlString.format('SELECT * FROM assignment WHERE crime_id = ? AND staff_id = ?', [crime_id, staff_id])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          if(Array.isArray(result) && result.length){
+            res.send("Attending")
+          }else{
+            res.send("Not Attending")
+          }
+          conn.end();
+        });
+    }
+  });
+});
 //////////// CRIMES ////////////
 
 
@@ -232,11 +293,12 @@ app.get('/api/crime/:id', (req,res) => {
 
   let query = db.query(sql, (err, result) => {
     if(err) throw err;
-
     if(Array.isArray(result) && result.length    ){
       res.send(result);
+
     }else{
       res.send("No results");
+
     }
     conn.end();
   });
@@ -280,7 +342,7 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
   let query = db.query(sql, (err, result) => {
     if(err) throw err;
 
-    res.send("Error")
+    res.send("Success")
     conn.end();
   });
 });

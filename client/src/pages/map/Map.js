@@ -120,7 +120,6 @@ class Map extends Component {
   }
 
   toggleActivityState=()=>{
-    console.log(this.state.activityState)
     if(this.state.activityState == "busy"){
 
       this.setState({activityState:"active"})
