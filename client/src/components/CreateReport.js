@@ -119,23 +119,23 @@ export class CreateReport extends Component {
                                                 <tr><th>Date</th>
                                                 <td colSpan="2">
                                                 <div className="input-field col s10">
-                                                    <input id="report_date" type="text" className="validate disabled" value={todaysdate} disabled required />
+                                                    <input id="report_date" type="text" className="validate disabled" defaultValue={todaysdate} disabled required />
                                                     <label htmlFor="report_date"></label>
                                                 </div>
                                                 </td></tr>
                                                 <tr><th>Time</th>
                                                 <td colSpan="2"><div className="input-field col s10">
-                                                    <input id="report_time" type="text" className="validate disabled" value={time} disabled required/>
+                                                    <input id="report_time" type="text" className="validate disabled" defaultValue={time} disabled required/>
                                                     <label htmlFor="report_time"></label>
                                                 </div></td></tr>
                                                 <tr><th>Garda</th>
                                                 <td colSpan="2"><div className="input-field col s10">
-                                                    <input id="report_garda" type="text" className="validate disabled" value={localStorage.getItem('user_name')} disabled required/>
+                                                    <input id="report_garda" type="text" className="validate disabled" defaultValue={localStorage.getItem('user_name')} disabled required/>
                                                     <label htmlFor="report_garda"></label>
                                                 </div></td></tr>
                                                 <tr><th>Crime ID</th>
                                                 <td colSpan="2"><div className="input-field col s10">
-                                                    <input id="report_crimeid" type="number" className="" value={this.props.crime_id} required/>
+                                                    <input id="report_crimeid" type="number" className="" defaultValue={this.props.crime_id} required/>
                                                     <label htmlFor="report_crimeid" className="active">Crime ID <small>(Optional)</small></label>
                                                 </div></td></tr>
                                                 <tr><th>Report</th>
