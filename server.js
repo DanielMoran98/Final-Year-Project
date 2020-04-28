@@ -157,15 +157,25 @@ app.get('/api/posts', verifyToken, (req, res) => {
 
 // API
 
-app.get('/api/division/all', (req, res) => {
-  var sql = SqlString.format('SELECT * FROM division')
-  const db = mysql.createConnection(dbCredentials);
-  var conn = db;
-  let query = db.query(sql, (err, result) => {
-    if(err) throw err;
-    res.send(result);
-    conn.end();
+app.get('/api/division/all', verifyToken, (req, res) => {
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        var sql = SqlString.format('SELECT * FROM division')
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          res.send(result);
+          conn.end();
+        });
+  
+    }
   });
+
 })
 
 app.post('/api/staff/setstatus', verifyToken, (req,res) => {
@@ -273,7 +283,7 @@ app.post('/api/assignment/checkattendance', verifyToken, (req,res) => {
 
 app.post('/api/crime/all', verifyToken,(req,res) => {
   // console.log(req.headers.authorization)
-  
+
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
       res.sendStatus(403)
@@ -291,21 +301,30 @@ app.post('/api/crime/all', verifyToken,(req,res) => {
   });
 });
 
-app.get('/api/crime/:id', (req,res) => {
-  var sql = SqlString.format('SELECT * FROM crime WHERE id=?', req.params.id)
-  const db = mysql.createConnection(dbCredentials);
-  var conn = db;
-
-  let query = db.query(sql, (err, result) => {
-    if(err) throw err;
-    if(Array.isArray(result) && result.length    ){
-      res.send(result);
-
-    }else{
-      res.send("No results");
-
+app.get('/api/crime/:id', verifyToken, (req,res) => {
+  console.log(req.token)
+  console.log(req.headers.authorization)
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        var sql = SqlString.format('SELECT * FROM crime WHERE id=?', req.params.id)
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          if(Array.isArray(result) && result.length    ){
+            res.send(result);
+      
+          }else{
+            res.send("No results");
+      
+          }
+          conn.end();
+        });  
     }
-    conn.end();
   });
 });
 
@@ -331,50 +350,67 @@ app.post('/api/crime/division', verifyToken,(req,res) => {
 });
 
 app.post('/api/crime/create', verifyToken, (req,res) => {
-  console.log(req.params.crime_crime)
-  if(req.body.urgency == "" || typeof req.body.urgency == 'undefined'){req.body.urgency=1}
 
-  for (const property in req.body) {
-    console.log(`${property}: ${req.body[property]}`);
-    if(req.body[property] == "" || typeof req.body[property] == 'undefined'){req.body[property]="No information provided."}
-    console.log(`${property}: ${req.body[property]}`);
-  }
-
-  var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?)', [req.body.latitude, req.body.longitude, req.body.crimeType, req.body.crimeDescription, req.body.suspectDescription, req.body.victimContact, req.body.urgency, req.body.division_id, req.body.staff_id])
-  const db = mysql.createConnection(dbCredentials);
-  var conn = db;
-
-  let query = db.query(sql, (err, result) => {
-    if(err) throw err;
-
-    res.send("Success")
-    conn.end();
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        console.log(req.params.crime_crime)
+        if(req.body.urgency == "" || typeof req.body.urgency == 'undefined'){req.body.urgency=1}
+      
+        for (const property in req.body) {
+          console.log(`${property}: ${req.body[property]}`);
+          if(req.body[property] == "" || typeof req.body[property] == 'undefined'){req.body[property]="No information provided."}
+          console.log(`${property}: ${req.body[property]}`);
+        }
+      
+        var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?)', [req.body.latitude, req.body.longitude, req.body.crimeType, req.body.crimeDescription, req.body.suspectDescription, req.body.victimContact, req.body.urgency, req.body.division_id, req.body.staff_id])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+      
+          res.send("Success")
+          conn.end();
+        });
+    }
   });
+  
 });
 
-app.get('/api/crime/:id/resolve', (req,res) => {
-  var sql = SqlString.format('SELECT * FROM crime WHERE id=?', req.params.id)
-  const db = mysql.createConnection(dbCredentials);
-  var conn = db;
+app.get('/api/crime/:id/resolve', verifyToken, (req,res) => {
 
-  let query = db.query(sql, (err, result) => {
-    if(err) throw err;
-
-    if(Array.isArray(result) && result.length){
-      //If crime exists: Mark it as resolved
-      sql = SqlString.format(`UPDATE crime SET status = 'inactive' WHERE id=?`, req.params.id)
-      console.log(sql)
-
-      let query = db.query(sql, (err, result) => {
-      if(err) throw err;
-
-        res.json("Crime #"+req.params.id+" marked as resolved.");
-      });
-
-    }else{
-      res.json("Crime #"+req.params.id+" doesn't exist.");
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        var sql = SqlString.format('SELECT * FROM crime WHERE id=?', req.params.id)
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+      
+          if(Array.isArray(result) && result.length){
+            //If crime exists: Mark it as resolved
+            sql = SqlString.format(`UPDATE crime SET status = 'inactive' WHERE id=?`, req.params.id)
+            console.log(sql)
+      
+            let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+      
+              res.json("Crime #"+req.params.id+" marked as resolved.");
+            });
+      
+          }else{
+            res.json("Crime #"+req.params.id+" doesn't exist.");
+          }
+          conn.end();
+        });
     }
-    conn.end();
   });
 });
 
@@ -383,23 +419,30 @@ app.get('/api/crime/:id/resolve', (req,res) => {
 
 app.post('/api/report/create', verifyToken, (req,res) => {
 
-  var content = req.body.content;
-  var staff_id = req.body.staff_id;
-  var crime_id = req.body.crime_id;
-
-  if(crime_id == ''){
-    crime_id = null
-  }
-  // if(typeof crime_id != undefined && crime_id != "")
-  var sql = SqlString.format('INSERT INTO report(content, staff_id, crime_id) VALUES(?,?,?)', [content, staff_id, crime_id])
-  const db = mysql.createConnection(dbCredentials);
-  var conn = db;
-
-  let query = db.query(sql, (err, result) => {
-    if(err) throw err;
-
-    res.send("Error")
-    conn.end();
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        var content = req.body.content;
+        var staff_id = req.body.staff_id;
+        var crime_id = req.body.crime_id;
+      
+        if(crime_id == ''){
+          crime_id = null
+        }
+        // if(typeof crime_id != undefined && crime_id != "")
+        var sql = SqlString.format('INSERT INTO report(content, staff_id, crime_id) VALUES(?,?,?)', [content, staff_id, crime_id])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+      
+          res.send("Error")
+          conn.end();
+        });  
+    }
   });
 });
 
@@ -426,7 +469,7 @@ app.post('/api/report/filterByStaff', verifyToken, (req,res) => {
   });
 });
 
-app.get('/api/unit/all', (req,res) => {
+app.get('/api/unit/all', verifyToken, (req,res) => {
   var sql = SqlString.format('SELECT * FROM unit');
   const db = mysql.createConnection(dbCredentials);
   var conn = db;
@@ -443,7 +486,7 @@ app.get('/api/unit/all', (req,res) => {
   });
 });
 
-app.get('/api/unit/:id', (req,res) => {
+app.get('/api/unit/:id', verifyToken, (req,res) => {
   var sql = SqlString.format('SELECT * FROM unit WHERE id=?', req.params.id)
   const db = mysql.createConnection(dbCredentials);
   var conn = db;
@@ -462,3 +505,14 @@ app.get('/api/unit/:id', (req,res) => {
 
 // LISTEN
 app.listen(port, () => console.log(`Server started on port ${port}.`))
+
+// jwt.verify(req.token, jwtSecret, (err, authData) =>{
+//   if(err){
+//     res.sendStatus(403)
+//     }else{
+//       // VERIFIED
+     
+
+
+//   }
+// });

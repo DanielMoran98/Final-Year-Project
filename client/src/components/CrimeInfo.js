@@ -47,8 +47,7 @@ export class CrimeInfo extends Component {
     async componentDidMount(){
 
         // Get crime details 
-        const response = await axios.get('/api/crime/'+this.props.id, {} , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then((response) =>{
-
+        const response = await axios.get('/api/crime/'+this.props.id, {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then((response) =>{
             this.setState({
                 id: response.data[0].id,
                 latitude: response.data[0].latitude,
@@ -70,14 +69,13 @@ export class CrimeInfo extends Component {
             
         }).catch(function(error){
             console.error(error)
-            toast(`Failed to retrieve data from server.`,{
+            toast(`Failed to retrieve crime data from server.`,{
                 type: toast.TYPE.ERROR,
                 position: toast.POSITION.TOP_CENTER
             });
         })
 
         // Check if user is already attending this crime
-        // Check if user is attending already
         var data = {
             crime_id: this.props.id,
             staff_id: localStorage.getItem('user_id')
@@ -97,7 +95,7 @@ export class CrimeInfo extends Component {
             
         }).catch(function(error){
             console.error(error)
-            toast(`Failed to retrieve data from server.`,{
+            toast(`Failed to retrieve attendance data from server.`,{
                 type: toast.TYPE.ERROR,
                 position: toast.POSITION.TOP_CENTER
             });
@@ -118,7 +116,7 @@ export class CrimeInfo extends Component {
     }
 
     async markResolved(id){
-        const response = await axios.get(`/api/crime/${id}/resolve`, {} , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
+        const response = await axios.get(`/api/crime/${id}/resolve` , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
 
 
         toast(`Crime #${id} marked as resolved.`,{
