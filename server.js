@@ -201,6 +201,9 @@ app.post('/api/staff/setstatus', verifyToken, (req,res) => {
   });
 });
 
+
+
+
 //////////// ASSIGNMENTS ////////////
 
 
@@ -263,6 +266,8 @@ app.post('/api/assignment/checkattendance', verifyToken, (req,res) => {
     }
   });
 });
+
+
 //////////// CRIMES ////////////
 
 
@@ -373,7 +378,8 @@ app.get('/api/crime/:id/resolve', (req,res) => {
   });
 });
 
-// REPORTS
+
+/////////////// REPORTS ////////////////
 
 app.post('/api/report/create', verifyToken, (req,res) => {
 
@@ -381,6 +387,9 @@ app.post('/api/report/create', verifyToken, (req,res) => {
   var staff_id = req.body.staff_id;
   var crime_id = req.body.crime_id;
 
+  if(crime_id == ''){
+    crime_id = null
+  }
   // if(typeof crime_id != undefined && crime_id != "")
   var sql = SqlString.format('INSERT INTO report(content, staff_id, crime_id) VALUES(?,?,?)', [content, staff_id, crime_id])
   const db = mysql.createConnection(dbCredentials);
@@ -391,6 +400,29 @@ app.post('/api/report/create', verifyToken, (req,res) => {
 
     res.send("Error")
     conn.end();
+  });
+});
+
+app.post('/api/report/filterByStaff', verifyToken, (req,res) => {
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        var staff_id = sanitizer.sanitize(req.body.staff_id)
+
+        var sql = SqlString.format('SELECT * FROM report WHERE staff_id = ?', [staff_id])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+      
+          res.send(result)
+          conn.end();
+        });
+    }
   });
 });
 

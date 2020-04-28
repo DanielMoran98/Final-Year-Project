@@ -3,16 +3,34 @@ import M from 'materialize-css';
 import './SideNav.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ShowReports from './ShowReports'
 
 const axios = require('axios');
 
 class SideNav extends Component {
+  constructor(props){
+    super(props);
+
+  }
+
+  state = {
+    showReportsDialog:false
+  }
   
   componentDidMount(){
     document.addEventListener('DOMContentLoaded', function() {
       var elems = document.querySelectorAll('.sidenav');
       var instances = M.Sidenav.init(elems, {});
     });
+  }
+
+  openShowReportsDialog = () =>{
+    this.setState({showReportsDialog: true})
+    console.log("Test")
+  }
+
+  closeShowReportsDialog = () =>{
+    this.setState({showReportsDialog: false})
   }
 
   render() {
@@ -47,17 +65,24 @@ class SideNav extends Component {
       <li>{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</li>
       <li><div className="divider" /></li>
       {this.props.staffType == "garda" ?
-        <li><a className="waves-effect" href="#!">My reports</a></li>          : <div></div>
+        <li><a className="waves-effect" href="#!" onClick={() => this.openShowReportsDialog()}>My reports</a></li>          : <div></div>
       }
       
       <li><a className="waves-effect" href="#!" onClick={() => onInformationButtonClick()}>Information</a></li>
-      <li><a className="waves-effect" href="#!">Settings</a></li>
+      {/* <li><a className="waves-effect" href="#!">Settings</a></li> */}
       <li><a className="waves-effect" href="#!" onClick={() => logout()}>End patrol</a></li>
 
       <li><div className="divider" /></li>
       <li><a className="subheader germ-version">GERM Version 0.1</a></li>
 
     </ul>
+    {this.state.showReportsDialog == true ?
+      <div id="showReportsContainer" style={{zIndex:500}}>
+        <ShowReports closeShowReportsDialog={this.closeShowReportsDialog} staff_id={localStorage.getItem("user_id")}/>
+      </div>
+    :
+     <div></div>
+    }
   </div>
 
   

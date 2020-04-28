@@ -48,13 +48,6 @@ class Map extends Component {
       position: toast.POSITION.TOP_CENTER,
     });  
 
-    addNotification({
-      title: 'Warning',
-      subtitle: 'This is a subtitle',
-      message: 'This is a very long message',
-      theme: 'darkblue',
-      native: true // when using native, your OS will handle theming.
-  });
   }
 
   onEmergencyButtonClick=()=>{
@@ -145,7 +138,6 @@ class Map extends Component {
         return (
         
         <div id="mapPageContainer">
-        <SideNav staffType={"garda"}/>
 
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
@@ -173,9 +165,11 @@ class Map extends Component {
                   <div className="col s4"><a onClick={()=>this.onEmergencyButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
                   <div className="col s4"><a onClick={()=>this.onPursuitButtonClick()} className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
                   <div className="col s4"><a onClick={()=>this.onReportButtonClick()}className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div>
-              <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-              <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+
             </div>
+            <SideNav staffType={"garda"}/>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
         </div>
 
       );
@@ -190,7 +184,6 @@ class Map extends Component {
     else if(localStorage.getItem('user_staffType') == "dispatcher"){
      return(
       <div id="mapPageContainer">
-        <SideNav staffType={"dispatcher"}/>
         
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
@@ -216,9 +209,12 @@ class Map extends Component {
                   {/* <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/danger.svg" className="btn-icon"/></a><br/><span className="buttonLabel">Emergency</span></div>
                   <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/siren.png" className="btn-icon"/></a><br/><span className="buttonLabel">Pursuit</span></div>
                   <div className="col s4"><a className="btn-floating btn-large waves-effect waves-light blue"><img src="/images/notes.png" className="btn-icon"/></a><br/><span className="buttonLabel">Report</span></div> */}
-              <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-              <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+
             </div>
+            <SideNav staffType={"dispatcher"}/>
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
+
       </div>
 
      )

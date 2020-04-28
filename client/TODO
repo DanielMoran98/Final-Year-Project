@@ -1,7 +1,6 @@
 
 API:
-        ☐ BCrypt Encryption
-        ☐ Search crime by date
+    ☐ Search crime by date
 
 Database:
     ☐ Add crime categories
@@ -15,11 +14,10 @@ Client:
             ✔ Attend Button Functionality @done(20-04-28 03:55)
             
         SideNav:
-            ☐ My reports - Filter reports by user
+            ✔ My reports - Filter reports by user @done(20-04-28 16:43)
             ✔ Information - Dialog box explaining system @done(20-04-28 02:04)
-            ☐ Settings - None for now
         Report:
-            ☐ View previously created reports
+            ✔ View previously created reports @done(20-04-28 15:53)
 
     Pages:
 
@@ -32,7 +30,7 @@ Bugs:
     ☐ Anchor point for markers is the top left of the image rather than bottom-center
 
 Main:
-    ☐ View reports by gardai number
+    ✔ View reports by gardai number @done(20-04-28 15:53)
     
 Archive:
   ✔ Emergency button create crime on current location @done(20-04-20 22:24) @project(Client.Components.GoogleMap)
