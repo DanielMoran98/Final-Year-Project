@@ -26,7 +26,7 @@ class Map extends Component {
     this.state = {
         displayCreateCrime: false,
         displayCreateReport: false,
-        activityState: "Busy"
+        activityState: "busy"
     };
 
   // this.closeCrimeDialog = this.closeCrimeDialog.bind(this)
@@ -120,13 +120,19 @@ class Map extends Component {
   }
 
   toggleActivityState=()=>{
-    if(this.state.activityState == "Busy"){
+    console.log(this.state.activityState)
+    if(this.state.activityState == "busy"){
 
-      this.setState({activityState:"Active"})
+      this.setState({activityState:"active"})
+      var formData = {user_id: localStorage.getItem('user_id'), status: "active"}
+      const response = axios.post('/api/staff/setstatus', formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}})
 
-    }else if(this.state.activityState == "Active"){
+    }else if(this.state.activityState == "active"){
 
-      this.setState({activityState:"Busy"})
+      this.setState({activityState:"busy"})
+      var formData = {user_id: localStorage.getItem('user_id'), status: "busy"}
+      const response = axios.post('/api/staff/setstatus', formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}})
+
     }
   }
 
@@ -146,7 +152,7 @@ class Map extends Component {
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
           <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
-          {this.state.activityState == "Busy" ?
+          {this.state.activityState == "busy" ?
             <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">close</i></a><br/><span className="buttonLabel">Busy</span></div>
           :
             <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a><br/><span className="buttonLabel">Active</span></div>
@@ -156,7 +162,7 @@ class Map extends Component {
 
         </div>
           <div id="GoogleMap">
-            <GoogleMap staffType={"garda"}/>
+            <GoogleMap staffType={"garda"} activityState={this.state.activityState}/>
           </div>
 
           { this.state.displayCreateReport == true &&
@@ -191,14 +197,14 @@ class Map extends Component {
         <div className="row header">
           <div className="col s2"><a href="#" data-target="slide-out" className="sidenav-trigger"><i className="material-icons">menu</i></a></div>
           <div className="col s8"><span className="username">{localStorage.getItem('user_rank')}. {localStorage.getItem('user_name')}</span><br/><span className="unitname">{ localStorage.getItem('user_badgeNumber') != "null" && localStorage.getItem('user_badgeNumber')}</span></div>
-          {this.state.activityState == "Busy" ?
+          {this.state.activityState == "busy" ?
             <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light red"><i className="material-icons">close</i></a><br/><span className="buttonLabel">Busy</span></div>
           :
             <div className="col s2"><a onClick={()=>this.toggleActivityState()} className="btn-floating btn-small waves-effect waves-light green"><i className="material-icons">check</i></a><br/><span className="buttonLabel">Active</span></div>
           }        </div>
           <div id="GoogleMap">
 
-          <GoogleMap  onClick={this.onDispatcherClick} staffType={"dispatcher"} />
+          <GoogleMap  onClick={this.onDispatcherClick} staffType={"dispatcher"} activityState={this.state.activityState}/>
 
         <div className="createCrimeContainer">
         

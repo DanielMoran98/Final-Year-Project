@@ -83,14 +83,15 @@ class GoogleMap extends Component {
       // If there are no active crimes, set noCrimes to true
       if(newMarkers.length == 0){this.setState({noCrimes: true})}
 
-      if(this.state.markers.length != 0 && this.state.markers.length < newMarkers.length){
+      // If the current fetch of crimes has additional crimes, notify nearby active Gardaí that a new crime has been reported near them
+      if(this.state.markers.length != 0 && this.state.markers.length < newMarkers.length && this.props.activityState == 'active'){
         addNotification({
           title: 'A new crime has been reported near your location',
           subtitle: 'New crime alert',
           message: 'A crime report has been added close to your location, check your map to see if you can help.',
           theme: 'darkblue',
-          native: true // when using native, your OS will handle theming.
-       });
+          native: true
+        });
       }
       // Update the state with the new array
       this.setState({markers: newMarkers});

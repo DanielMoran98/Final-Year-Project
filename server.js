@@ -77,6 +77,15 @@ app.post('/login', (req, res) => {
 
       if(results[0].password == password){
         // Password correct
+
+        // Update user status
+        var sql = SqlString.format(`UPDATE staff SET status = ? WHERE id=?`, ['busy', results[0].id])
+
+
+          let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+          });
+
         var user = {
           id: results[0].id,
           name: results[0].name,
@@ -110,6 +119,28 @@ app.post('/login', (req, res) => {
 
 });
 
+app.post('/logout', verifyToken, (req, res) => {
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        console.log("Verified")
+
+        var user_id=sanitizer.sanitize(req.body.user_id);
+
+        var sql = SqlString.format(`UPDATE staff SET status = ? WHERE id=?`, ['offline', user_id])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          console.log("Queried")
+        });
+      conn.end()
+      res.send("Logged out")
+    }
+  })
+})
 
 app.get('/api/posts', verifyToken, (req, res) => {
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -123,6 +154,7 @@ app.get('/api/posts', verifyToken, (req, res) => {
     }
   });
 })
+
 // API
 
 app.get('/api/division/all', (req, res) => {
@@ -135,6 +167,43 @@ app.get('/api/division/all', (req, res) => {
     conn.end();
   });
 })
+
+app.post('/api/staff/setstatus', verifyToken, (req,res) => {
+  // console.log(req.headers.authorization)
+  console.log(req.body.status)
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        console.log(req.body.status)
+        var status = sanitizer.sanitize(req.body.status)
+        var id = sanitizer.sanitize(req.body.user_id)
+
+        if (status == "busy" || status == "active" || status == "offline"){
+          var sql = SqlString.format(`UPDATE staff SET status = ? WHERE id=?`, [status, id])
+          const db = mysql.createConnection(dbCredentials);
+          var conn = db;
+          console.log(req.body.status)
+
+          let query = db.query(sql, (err, result) => {
+            if(err) throw err;
+            console.log([status, id])
+
+            res.send("Successfully updated status");
+            conn.end();
+          });
+        }else{
+          //Bad input
+          res.send("Bad input");
+        }
+        
+    }
+  });
+});
+
+
+//////////// CRIMES ////////////
+
 
 app.post('/api/crime/all', verifyToken,(req,res) => {
   // console.log(req.headers.authorization)
