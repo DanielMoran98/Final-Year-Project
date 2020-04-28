@@ -27,13 +27,7 @@ export class ReportSnippet extends Component {
 
   
     componentDidMount(){
-        var date = new Date(this.props.datetime)
-        var dateFormatted = JSON.stringify(date.getHours+":"+date.getMinutes+":"+date.getSeconds+" GMT")
-        
-        // var now = new Date();
-        // var todaysdate = now.getDate() + "-" + now.getMonth() + "-" + now.getFullYear()
-        // var time = now.getHours() + ":" + now.getMinutes() + ":" + now.getUTCSeconds()+ " GMT";
-        this.setState({dateFormatted:dateFormatted}, ()=> {this.setState({dataLoaded: true})})
+        this.setState({dataLoaded: true})
     }
 
 
@@ -41,6 +35,10 @@ export class ReportSnippet extends Component {
 
 
     render() {
+        var dateDisplay = this.props.datetime.replace('Z','')
+        dateDisplay = dateDisplay.replace('T', ' ')
+        dateDisplay = dateDisplay.replace('.000', '')
+
         if(this.state.dataLoaded){
             return (
                 <table className="showReportTable" style={{overflow:"hidden", tableLayout:"fixed"}}>
@@ -50,7 +48,7 @@ export class ReportSnippet extends Component {
                         <tr><th colSpan="1">Date/Time</th>
                         <td colSpan="2"><div className="input-field col s10">
                             <p className="report_time">
-                                {this.props.datetime}
+                                {dateDisplay}
                             </p>
                         </div></td></tr>
                         <tr><th colSpan="1">Crime</th>

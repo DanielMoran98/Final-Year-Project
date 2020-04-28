@@ -39,25 +39,10 @@ export class CreateCrime extends Component {
 
     
     async componentDidMount(){
-        // const url = "/api/crime/"+this.props.id;
-        // const response = await fetch(url);
-        // const data = await response.json();
-        // console.log(data[0].crimeType)
+
 
         this.setState({
-            // id: data[0].id,
-            // latitude: data[0].latitude,
-            // longitude: data[0].longitude,
-            // datetime: data[0].datetime,
-            // crimeType: data[0].crimeType,
-            // crimeDescription: data[0].crimeDescription,
-            // suspectDescription: data[0].suspectDescription,
-            // dangers: data[0].dangers,
-            // victimContact: data[0].victimContact,
-            // urgency: data[0].urgency,
-            // attendeeCount: data[0].attendeeCount,
-            // status: data[0].status,
-            // division_id: data[0].division_id
+
         }, () => {this.setState({dataLoaded: true})});
 
     }
