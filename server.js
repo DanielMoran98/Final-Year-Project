@@ -393,6 +393,22 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
       }else{
         // VERIFIED
         // console.log(req.params.crime_crime)
+        id = sanitizer.sanitize(req.body.id)
+
+        var inputData = {
+          id: sanitizer.sanitize(req.body.id),
+          latitude: sanitizer.sanitize(req.body.latitude),
+          longitude: sanitizer.sanitize(req.body.longitude),
+          crimeType: sanitizer.sanitize(req.body.crimeType),
+          crimeDescription: sanitizer.sanitize(req.body.crimeDescription),
+          suspectDescription: sanitizer.sanitize(req.body.suspectDescription),
+          victimContact: sanitizer.sanitize(req.body.victimContact),
+          urgency: sanitizer.sanitize(req.body.urgency),
+          dangers: sanitizer.sanitize(req.body.dangers),
+          division_id: sanitizer.sanitize(req.body.division_id),
+          staff_id: sanitizer.sanitize(req.body.staff_id)
+        }
+
         if(req.body.urgency == "" || typeof req.body.urgency == 'undefined'){req.body.urgency=1}
       
         for (const property in req.body) {
@@ -401,7 +417,8 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
           // console.log(`${property}: ${req.body[property]}`);
         }
       
-        var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, dangers, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?,?)', [req.body.latitude, req.body.longitude, req.body.crimeType, req.body.crimeDescription, req.body.suspectDescription, req.body.victimContact, req.body.urgency, req.body.dangers, req.body.division_id, req.body.staff_id])
+        var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, dangers, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?,?)',
+         [inputData.latitude, inputData.longitude, inputData.crimeType, inputData.crimeDescription, inputData.suspectDescription, inputData.victimContact, inputData.urgency, inputData.dangers, inputData.division_id, inputData.staff_id])
         const db = mysql.createConnection(dbCredentials);
         var conn = db;
       

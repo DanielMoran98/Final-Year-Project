@@ -121,6 +121,17 @@ export class UpdateCrime extends Component {
 
     }
 
+    async markResolved(id){
+        // Mark crime as resolved
+        const response = await axios.get(`/api/crime/${id}/resolve` , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
+
+
+        toast(`Crime #${id} marked as resolved.`,{
+            type: toast.TYPE.INFO,
+            position: toast.POSITION.TOP_CENTER
+        });
+        this.onExitClick()
+    }
 
 
 
@@ -151,7 +162,7 @@ export class UpdateCrime extends Component {
                                 {/* <img src="images/gardaBackground.jpg"/> */}
                                 <div className={this.props.color + " box"} style={{height: "20vh"}}/>
 
-                                <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Update Crime #{this.state.id}</span>
+                                <span className="card-title" style={{color: "white", fontWeight:500, fontSize:"3.4rem"}}>Update Crime</span>
                                 </div>
                                 <div className="card-content">
                                     </div>
@@ -236,7 +247,8 @@ export class UpdateCrime extends Component {
                                     </div>
                                 {this.props.staffType == "dispatcher" ?
                                     <div className="card-action" style={{paddingTop:"30px", paddingBottom: "30px"}}>
-                                        <a href="#" className="btn green crime-card-button" onClick={() => this.updateCrime(this.props.id)}>Update Crime</a>
+                                        <a href="#" className="btn green crime-card-button" onClick={() => this.updateCrime(this.props.id)} style={{margin: "15px"}}>Update Crime</a>
+                                        <a href="#" className="btn primary-background crime-card-button" onClick={() => this.markResolved(this.props.id)}>Mark Resolved</a>
                                     </div>
                                   :
                                    ''
