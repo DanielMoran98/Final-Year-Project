@@ -26,7 +26,9 @@ class Map extends Component {
     this.state = {
         displayCreateCrime: false,
         displayCreateReport: false,
-        activityState: "busy"
+        activityState: "busy",
+        userLng: 0.00,
+        userLat: 0.00
     };
 
   // this.closeCrimeDialog = this.closeCrimeDialog.bind(this)
@@ -60,11 +62,28 @@ class Map extends Component {
     }
   }
 
+    async requestUserLocation(){
+      if(navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.requestUserLocationSuccess, this.requestUserLocationFailure);
+      } else {
+          alert("Geolocation is not supported by this browser.");
+      }
+    }
+  
+    // If user has accepted location permissions
+    requestUserLocationSuccess=(position)=>{
+      this.setState({userLng: position.coords.longitude, userLat: position.coords.latitude})
+    }
+
+    // If user has denied location permissions
+    async requestUserLocationFailure(position){
+      console.log("Failure")
+    }
+
   // If user has accepted location permissions
   async geoSuccess(position){
     console.log("Success")
     console.log(position.coords.longitude)
-
     var formData = {
       latitude: position.coords.latitude,
       longitude: position.coords.longitude,
@@ -132,6 +151,14 @@ class Map extends Component {
     }
   }
 
+  componentDidMount(){
+    this.interval = setInterval(()=>this.requestUserLocation(), 1500);
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.interval);
+  }
+
   render(){
 
     // GARDA ONLY
@@ -156,7 +183,8 @@ class Map extends Component {
 
         </div>
           <div id="GoogleMap">
-            <GoogleMap staffType={"garda"} activityState={this.state.activityState}/>
+            <GoogleMap staffType={"garda"} activityState={this.state.activityState} userLat={this.state.userLat} userLng={this.state.userLng}/>
+
           </div>
 
           { this.state.displayCreateReport == true &&
@@ -199,7 +227,7 @@ class Map extends Component {
           }        </div>
           <div id="GoogleMap">
 
-          <GoogleMap  onClick={this.onDispatcherClick} staffType={"dispatcher"} activityState={this.state.activityState}/>
+          <GoogleMap  onClick={this.onDispatcherClick} staffType={"dispatcher"} activityState={this.state.activityState}  userLat={this.state.userLat} userLng={this.state.userLng}/>
 
         <div className="createCrimeContainer">
         

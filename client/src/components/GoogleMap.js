@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from "./Marker"
+import User from "./User"
 import CrimeInfo from './CrimeInfo';
 import M from 'materialize-css';
 import { ToastContainer, toast } from 'react-toastify';
@@ -134,12 +135,17 @@ class GoogleMap extends Component {
         >
         
 
+        {this.props.staffType == "garda" ?
+          <User key={10000} lat={this.props.userLat} lng={this.props.userLng}/>
+          :
+          null
+        }
 
           {/* Populate map with markers from API / State */}
           {this.state.markers.map(i => {
               return <Marker id={i.id} key={i.id} lat={i.lat} lng={i.lng} color={i.color} staffType={this.props.staffType}/>
              
-            })}
+          })}
 
 
         </GoogleMapReact>
