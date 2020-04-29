@@ -318,8 +318,7 @@ app.post('/api/crime/all', verifyToken,(req,res) => {
 
 // Returns a single crime entry
 app.get('/api/crime/:id', verifyToken, (req,res) => {
-  console.log(req.token)
-  console.log(req.headers.authorization)
+
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
       res.sendStatus(403)
@@ -393,16 +392,16 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
       res.sendStatus(403)
       }else{
         // VERIFIED
-        console.log(req.params.crime_crime)
+        // console.log(req.params.crime_crime)
         if(req.body.urgency == "" || typeof req.body.urgency == 'undefined'){req.body.urgency=1}
       
         for (const property in req.body) {
-          console.log(`${property}: ${req.body[property]}`);
+          // console.log(`${property}: ${req.body[property]}`);
           if(req.body[property] == "" || typeof req.body[property] == 'undefined'){req.body[property]="No information provided."}
-          console.log(`${property}: ${req.body[property]}`);
+          // console.log(`${property}: ${req.body[property]}`);
         }
       
-        var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?)', [req.body.latitude, req.body.longitude, req.body.crimeType, req.body.crimeDescription, req.body.suspectDescription, req.body.victimContact, req.body.urgency, req.body.division_id, req.body.staff_id])
+        var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, dangers, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?,?)', [req.body.latitude, req.body.longitude, req.body.crimeType, req.body.crimeDescription, req.body.suspectDescription, req.body.victimContact, req.body.urgency, req.body.dangers, req.body.division_id, req.body.staff_id])
         const db = mysql.createConnection(dbCredentials);
         var conn = db;
       
