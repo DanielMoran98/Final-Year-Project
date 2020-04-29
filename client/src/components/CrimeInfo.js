@@ -76,6 +76,7 @@ export class CrimeInfo extends Component {
         })
 
         // Check if user is already attending this crime
+
         var data = {
             crime_id: this.props.id,
             staff_id: localStorage.getItem('user_id')
@@ -116,6 +117,7 @@ export class CrimeInfo extends Component {
     }
 
     async markResolved(id){
+        // Mark crime as resloved by Garda
         const response = await axios.get(`/api/crime/${id}/resolve` , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
 
 
@@ -127,6 +129,8 @@ export class CrimeInfo extends Component {
     }
 
     async markAttending(crime_id, staff_id){
+        // Mark Garda as attending the crime
+
         var postData = {
             crime_id: crime_id,
             staff_id: staff_id

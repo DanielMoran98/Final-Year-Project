@@ -38,6 +38,7 @@ class Statistics extends Component {
 
       async componentDidMount(){
         try {
+          // Retrieve and save to state all crime entries for the last month
           const response = await axios.post('/api/crime/all/lastmonth', {}, {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
           var data = response.data
     
@@ -64,7 +65,7 @@ class Statistics extends Component {
           if(this.state.errorDisplayed == false){
           this.setState({errorDisplayed: true})
           console.error(error);
-          toast(`Your authentication token has expired, you are no longer authorized. Please log in again.`,{
+          toast(`Failed to connect to the server. Check your connection and try again.`,{
             type: toast.TYPE.ERROR,
             position: toast.POSITION.TOP_CENTER
           });

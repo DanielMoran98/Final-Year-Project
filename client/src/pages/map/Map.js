@@ -32,6 +32,7 @@ class Map extends Component {
   // this.closeCrimeDialog = this.closeCrimeDialog.bind(this)
   }
 
+  // Dispatcher click on map handler
   onDispatcherClick=(obj)=>{
     this.setState({
       displayCreateCrime: true,
@@ -42,7 +43,7 @@ class Map extends Component {
   }
 
   onPursuitButtonClick=()=>{
-    // Create crime on current location
+    // Notify user
     toast(`The pursuit feature will be available in a later version.`,{
       type: toast.TYPE.INFO,
       position: toast.POSITION.TOP_CENTER,
@@ -59,6 +60,7 @@ class Map extends Component {
     }
   }
 
+  // If user has accepted location permissions
   async geoSuccess(position){
     console.log("Success")
     console.log(position.coords.longitude)
@@ -93,6 +95,8 @@ class Map extends Component {
   })
 
   }
+
+  // If user has rejected location permissions
   geoError(){
     console.log("Error")
     toast(`You have denied location permissions, this must be changed manually in your browser settings.`,{

@@ -59,7 +59,7 @@ export class CreateReport extends Component {
         }
 
         console.log(formData)
-
+        // Send the report to the server
         const response = await axios.post('/api/report/create',formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
             console.log("done")
             toast(`Report has been successfully stored`,{

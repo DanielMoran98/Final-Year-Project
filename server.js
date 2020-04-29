@@ -5,6 +5,7 @@ const mysql = require('mysql');
 var SqlString = require('sqlstring');
 var sanitizer = require('sanitizer');
 const jwt = require('jsonwebtoken')
+const bodyParser = require('body-parser')
 
 // Config
 const app = express();
@@ -17,7 +18,8 @@ const dbCredentials = {
 };
 const jwtSecret = process.env.JWT_SECRET
 
-const bodyParser = require('body-parser')
+
+// Middleware
 
 app.use(
   bodyParser.urlencoded({
@@ -142,6 +144,12 @@ app.post('/logout', verifyToken, (req, res) => {
   })
 })
 
+
+
+// API
+
+
+
 app.get('/api/posts', verifyToken, (req, res) => {
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
@@ -182,10 +190,9 @@ app.get('/api/division/all', verifyToken, (req, res) => {
 //////////// STAFF ////////////
 
 
-
+// Sets status state of a staff field
 app.post('/api/staff/setstatus', verifyToken, (req,res) => {
-  // console.log(req.headers.authorization)
-  console.log(req.body.status)
+
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
       res.sendStatus(403)
@@ -222,6 +229,7 @@ app.post('/api/staff/setstatus', verifyToken, (req,res) => {
 //////////// ASSIGNMENTS ////////////
 
 
+// Creates an assignment entry
 app.post('/api/assignment/create', verifyToken, (req,res) => {
 
 
@@ -253,8 +261,9 @@ app.post('/api/assignment/create', verifyToken, (req,res) => {
   });
 });
 
-app.post('/api/assignment/checkattendance', verifyToken, (req,res) => {
 
+// Returns whether a Garda is marked as attending a crime
+app.post('/api/assignment/checkattendance', verifyToken, (req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
@@ -286,6 +295,7 @@ app.post('/api/assignment/checkattendance', verifyToken, (req,res) => {
 //////////// CRIMES ////////////
 
 
+// Returns all crime entries
 app.post('/api/crime/all', verifyToken,(req,res) => {
   // console.log(req.headers.authorization)
 
@@ -306,6 +316,7 @@ app.post('/api/crime/all', verifyToken,(req,res) => {
   });
 });
 
+// Returns a single crime entry
 app.get('/api/crime/:id', verifyToken, (req,res) => {
   console.log(req.token)
   console.log(req.headers.authorization)
@@ -333,14 +344,14 @@ app.get('/api/crime/:id', verifyToken, (req,res) => {
   });
 });
 
+// Returns crime entries based on division
 app.post('/api/crime/division', verifyToken,(req,res) => {
-  // console.log(req.body.division_id)
-  var division = req.body.division_id;
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
     if(err){
       res.sendStatus(403)
       }else{
+        var division = req.body.division_id;
         var sql = SqlString.format('SELECT * FROM crime WHERE division_id = ?', [division])
         const db = mysql.createConnection(dbCredentials);
         var conn = db;
@@ -354,6 +365,7 @@ app.post('/api/crime/division', verifyToken,(req,res) => {
   });
 });
 
+// Returns all crime entries created in the last 30 days
 app.post('/api/crime/all/lastmonth', verifyToken,(req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -373,6 +385,7 @@ app.post('/api/crime/all/lastmonth', verifyToken,(req,res) => {
   });
 });
 
+// Creates a crime entry
 app.post('/api/crime/create', verifyToken, (req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -404,6 +417,7 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
   
 });
 
+// Marks a crime entry as resulved
 app.get('/api/crime/:id/resolve', verifyToken, (req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -441,6 +455,9 @@ app.get('/api/crime/:id/resolve', verifyToken, (req,res) => {
 
 /////////////// REPORTS ////////////////
 
+
+
+// Creates a report entry
 app.post('/api/report/create', verifyToken, (req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -470,6 +487,8 @@ app.post('/api/report/create', verifyToken, (req,res) => {
   });
 });
 
+
+// Returns reports created by a specific Garda
 app.post('/api/report/filterByStaff', verifyToken, (req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -492,6 +511,10 @@ app.post('/api/report/filterByStaff', verifyToken, (req,res) => {
     }
   });
 });
+
+
+/////////// Deprecated ////////////
+
 
 app.get('/api/unit/all', verifyToken, (req,res) => {
   var sql = SqlString.format('SELECT * FROM unit');
@@ -527,16 +550,5 @@ app.get('/api/unit/:id', verifyToken, (req,res) => {
   });
 });
 
-// LISTEN
+// Listen for incoming requests
 app.listen(port, () => console.log(`Server started on port ${port}.`))
-
-// jwt.verify(req.token, jwtSecret, (err, authData) =>{
-//   if(err){
-//     res.sendStatus(403)
-//     }else{
-//       // VERIFIED
-     
-
-
-//   }
-// });

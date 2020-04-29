@@ -55,6 +55,7 @@ export class CreateCrime extends Component {
 
         var urgency = document.querySelector('input[name="urgency_group"]:checked').value;
 
+        // Auto fill location data from props
         var formData = {
             latitude: this.props.crimeLat,
             longitude: this.props.crimeLng,

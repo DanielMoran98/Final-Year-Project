@@ -25,7 +25,10 @@ function App() {
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous"></link>
     </div>
+    {/* Initialize Notifications */}
     <Notifications />
+
+    {/* React Router */}
     <Router>
       <Route path="/" exact component={Login} />
       <Route path="/map" exact component={Map} />
@@ -38,7 +41,6 @@ function App() {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        {console.log("Imported")}
       </div>
     </div>
   );

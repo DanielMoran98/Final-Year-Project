@@ -29,6 +29,7 @@ class GoogleMap extends Component {
   };
 
   async getMarkers(){
+    // Get active crimes by user division 
     try {
       const response = await axios.post('/api/crime/division', {division_id: localStorage.getItem("user_division_id")}, {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}});
       var data = response.data
@@ -84,6 +85,7 @@ class GoogleMap extends Component {
 
     } catch (error) {
       if(this.state.errorDisplayed == false){
+      // If the timer on the user's JWT expires, notify them and prompt to re-login
       this.setState({errorDisplayed: true})
       console.error(error);
       toast(`Your authentication token has expired, you are no longer authorized. Please log in again.`,{
@@ -91,22 +93,25 @@ class GoogleMap extends Component {
         position: toast.POSITION.TOP_CENTER
       });
       setTimeout(()=>window.location.replace("/"), 5000)
-      // window.location.replace("/");
      }
     }
   }
 
   componentDidMount(){
     this.getMarkers()
+    // Repeat getMarkers() every 1.5 seconds
     this.interval = setInterval(()=>this.getMarkers(), 1500);
 
   }
 
   componentWillUnmount() {
+    // Clear the interval on component deletion
     clearInterval(this.interval);
   }
   
   render() {
+
+    // Only render after API fetch complete
 
     if (this.state.markers.length > 0 || this.state.noCrimes == true) {
 
@@ -138,12 +143,6 @@ class GoogleMap extends Component {
 
 
         </GoogleMapReact>
-   
-
-        {/* <div className="col s10 m6 offset-s1 offset-m3" style={{display:"block",position:"absolute", top:"15px", zIndex:"5", left:"0", right:"0"}} className="center-align">
-          <CrimeInfo/>
-        </div> */}
-
           
 
       </div>

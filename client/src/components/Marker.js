@@ -34,7 +34,7 @@ class Marker extends Component {
   render() {
 
     if(this.state.showDialog == true){
-
+      // React Portal renders the CrimeInfo component at a different place in the DOM Tree
       return ReactDOM.createPortal(
         <div className="markerContainer">
               <CrimeInfo id={this.props.id} color={this.props.color} closeCrimeDialog={this.closeCrimeDialog} staffType={this.props.staffType}/>

@@ -26,7 +26,7 @@ export class ShowReports extends Component {
 
 
     async componentDidMount(){
-
+        // Retrieve the reports, and store them in React state
         var data = {
             staff_id: this.props.staff_id
         }
@@ -49,6 +49,7 @@ export class ShowReports extends Component {
                 newReports.push(report);
             }
       
+            // Store whether or not results were found
             if(newReports.length == 0){this.setState({noReports: true})}
             this.setState({reports: newReports}, () => {
                 this.setState({dataLoaded: true})

@@ -23,11 +23,13 @@ function Login() {
     .then(function (response) {
       console.log("res");
       if(response.data == "Login failed"){
+        // Notify user of failed login
         toast(`Login Failed`,{
           type: toast.TYPE.ERROR,
           position: toast.POSITION.TOP_CENTER
       });
       }else{
+        // Login success, store account details and Auth token locally
         toast(`Login Success!`,{
           type: toast.TYPE.SUCCESS,
           position: toast.POSITION.TOP_CENTER

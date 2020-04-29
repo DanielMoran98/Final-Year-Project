@@ -36,6 +36,7 @@ class SideNav extends Component {
   render() {
 
     async function logout(){
+      // Handle logout, clear auth token and redirect
       var formData = {user_id: localStorage.getItem('user_id')}
       const response = await axios.post('/logout', formData , {headers: {'Authorization': "Bearer "+localStorage.getItem('jwtToken')}}).then(function(){
         console.log("done")
