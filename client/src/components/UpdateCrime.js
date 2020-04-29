@@ -174,22 +174,22 @@ export class UpdateCrime extends Component {
                                             </thead>
                                             <tbody>
                                                 <tr><th rowSpan="2"><p style={{fontWeight:"bold", textAlign:"center"}}>{dateFormatted.toGMTString().replace("\"", "")}</p></th></tr>
-                                                <tr><th>Crime </th>
-                                                <td>
+                                                <tr><th colSpan="1">Crime </th>
+                                                <td colSpan="2">
                                                 <div className="input-field col s10">
                                                     <input id="updatecrime_crime" type="text" className="validate" defaultValue={this.state.crimeType} required />
                                                 </div>
                                                 </td></tr>
-                                                <tr><th>Description</th>
-                                                <td><div className="input-field col s10">
+                                                <tr><th colSpan="1">Description</th>
+                                                <td colSpan="2"><div className="input-field col s10">
                                                     <input id="updatecrime_description" type="text" className="validate" defaultValue={this.state.crimeDescription} required/>
                                                 </div></td></tr>
-                                                <tr><th>Contact</th>
-                                                <td><div className="input-field col s10">
+                                                <tr><th colSpan="1">Contact</th>
+                                                <td colSpan="2"><div className="input-field col s10">
                                                     <input id="updatecrime_victim" type="text" className="validate" defaultValue={this.state.victimContact} required/>
                                                 </div></td></tr>
-                                                <tr><th>Urgency</th>
-                                                <td> <div className="input-field col s10">
+                                                <tr><th colSpan="1">Urgency</th>
+                                                <td colSpan="2"> <div className="input-field col s10">
                                                     
                                                 <p>
                                                     <label>
@@ -233,12 +233,12 @@ export class UpdateCrime extends Component {
                                                 </p>
 
                                                 </div></td></tr>
-                                                <tr><th>Dangers</th>
-                                                <td><div className="input-field col s10">
+                                                <tr><th colSpan="1">Dangers</th>
+                                                <td colSpan="2"><div className="input-field col s10">
                                                     <input id="updatecrime_dangers" type="text" className="validate" defaultValue={this.state.dangers} required/>
                                                 </div></td></tr>
-                                                <tr><th>Suspect(s)</th>
-                                                <td><div className="input-field col s10">
+                                                <tr><th colSpan="1">Suspect(s)</th>
+                                                <td colSpan="2"><div className="input-field col s10">
                                                     <input id="updatecrime_suspect" type="text" className="validate" defaultValue={this.state.suspectDescription} required/>
                                                 </div></td></tr>
 

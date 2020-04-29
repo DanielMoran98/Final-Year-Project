@@ -1,11 +1,11 @@
 // Imports
 require('dotenv').config() //Load the variables from our local environment
-const express = require('express');
-const mysql = require('mysql');
-var SqlString = require('sqlstring');
-var sanitizer = require('sanitizer');
-const jwt = require('jsonwebtoken')
-const bodyParser = require('body-parser')
+const express = require('express'); // Used to serve up API routes
+const mysql = require('mysql'); // Used to interact with the MySQL Database
+var SqlString = require('sqlstring'); // Used to format SQL queries
+var sanitizer = require('sanitizer'); // Used to sanitize data
+const jwt = require('jsonwebtoken') // Used for authentication and access control
+const bodyParser = require('body-parser') // Used to parse data from requests
 
 // Config
 const app = express();
@@ -100,7 +100,7 @@ app.post('/login', (req, res) => {
           division_id: results[0].division_id
         }
 
-        jwt.sign(user, jwtSecret,{expiresIn: '60m'}, (err, token) => {
+        jwt.sign(user, jwtSecret,{expiresIn: '16h'}, (err, token) => {
           console.log("Login success!")
           res.json({
             token: token,
@@ -197,19 +197,17 @@ app.post('/api/staff/setstatus', verifyToken, (req,res) => {
     if(err){
       res.sendStatus(403)
       }else{
-        console.log(req.body.status)
         var status = sanitizer.sanitize(req.body.status)
         var id = sanitizer.sanitize(req.body.user_id)
 
+        // Verify the request
         if (status == "busy" || status == "active" || status == "offline"){
           var sql = SqlString.format(`UPDATE staff SET status = ? WHERE id=?`, [status, id])
           const db = mysql.createConnection(dbCredentials);
           var conn = db;
-          console.log(req.body.status)
 
           let query = db.query(sql, (err, result) => {
             if(err) throw err;
-            console.log([status, id])
 
             res.send("Successfully updated status");
             conn.end();
@@ -411,10 +409,10 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
 
         if(req.body.urgency == "" || typeof req.body.urgency == 'undefined'){req.body.urgency=1}
       
-        for (const property in req.body) {
-          // console.log(`${property}: ${req.body[property]}`);
-          if(req.body[property] == "" || typeof req.body[property] == 'undefined'){req.body[property]="No information provided."}
-          // console.log(`${property}: ${req.body[property]}`);
+        for (const property in inputData) {
+          // console.log(`${property}: ${inputData[property]}`);
+          if(inputData[property] == "" || typeof inputData[property] == 'undefined'){inputData[property]="No information provided."}
+          // console.log(`${property}: ${inputData[property]}`);
         }
       
         var sql = SqlString.format('INSERT INTO crime(latitude, longitude, crimeType, crimeDescription, suspectDescription, victimContact, urgency, dangers, division_id, staff_id) VALUES(?,?,?,?,?,?,?,?,?,?)',
