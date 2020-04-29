@@ -69,7 +69,7 @@ class SideNav extends Component {
       }
       
       <li><a className="waves-effect" href="#!" onClick={() => onInformationButtonClick()}>Information</a></li>
-      {/* <li><a className="waves-effect" href="#!">Settings</a></li> */}
+      <li><a className="waves-effect" href="#!"onClick= {() => window.location.replace('/statistics')}>Statistical view</a></li>
       <li><a className="waves-effect" href="#!" onClick={() => logout()}>End patrol</a></li>
 
       <li><div className="divider" /></li>

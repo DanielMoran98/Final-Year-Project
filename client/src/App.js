@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import CreateCrime from './components/CreateCrime';
 import { Notifications } from 'react-push-notification';
+import Statistics from './pages/statistics/Statistics';
 
 const axios = require('axios');
 
@@ -22,11 +23,13 @@ function App() {
     <div className="styles">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.css"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossOrigin="anonymous"></link>
     </div>
     <Notifications />
     <Router>
       <Route path="/" exact component={Login} />
       <Route path="/map" exact component={Map} />
+      <Route path="/statistics" exact component={Statistics} />
       <Route path="/test" exact component={CreateCrime} />
     </Router>
 

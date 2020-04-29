@@ -155,7 +155,6 @@ app.get('/api/posts', verifyToken, (req, res) => {
   });
 })
 
-// API
 
 app.get('/api/division/all', verifyToken, (req, res) => {
 
@@ -177,6 +176,12 @@ app.get('/api/division/all', verifyToken, (req, res) => {
   });
 
 })
+
+
+
+//////////// STAFF ////////////
+
+
 
 app.post('/api/staff/setstatus', verifyToken, (req,res) => {
   // console.log(req.headers.authorization)
@@ -337,6 +342,25 @@ app.post('/api/crime/division', verifyToken,(req,res) => {
       res.sendStatus(403)
       }else{
         var sql = SqlString.format('SELECT * FROM crime WHERE division_id = ?', [division])
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+          res.send(result);
+          conn.end();
+        });
+    }
+  });
+});
+
+app.post('/api/crime/all/lastmonth', verifyToken,(req,res) => {
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        var sql = SqlString.format('SELECT * FROM crime WHERE datetime >= now() - INTERVAL 1 month', [])
         const db = mysql.createConnection(dbCredentials);
         var conn = db;
 
