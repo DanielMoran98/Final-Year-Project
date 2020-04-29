@@ -1,36 +1,47 @@
 
 API:
-    ☐ Search crime by date
+    ✔ Search crime by date @done(20-04-29 16:31)
+    ✔ Update crime entries @done(20-04-29 12:34)
 
 Database:
-    ☐ Add crime categories
 
 Client:
     Components:
         GoogleMap:
-            ☐ Show current location
+            ✔ Show current location @done(20-04-27 16:30)
 
         CrimeInfo:
-            ✔ Attend Button Functionality @done(20-04-28 03:55)
+            ✔ Attend Button Functionality @done(20-04-14 03:55)
             
         SideNav:
-            ✔ My reports - Filter reports by user @done(20-04-28 16:43)
+            ✔ My reports - Filter reports by user @done(20-04-15 16:43)
             ✔ Information - Dialog box explaining system @done(20-04-28 02:04)
+            ✔ Statistics - View heatmap of last month's crime @done(20-04-29 16:36)
         Report:
-            ✔ View previously created reports @done(20-04-28 15:53)
+            ✔ View previously created reports @done(20-04-15 15:53)
+        CreateCrime:
+            ✔ Allow dispatchers to create crimes @done(20-04-17 16:34)
+        UpdateCrime:
+            ✔ Allow dispatchers to update crimes @done(20-04-18 16:34)
+        CreateReport:
+            ✔ Allow Gardai to create reports @done(20-04-15 12:41)
+        ShowReport:
+            ✔ Allow Gardai to view their reports @done(20-04-15 16:33)
+        ReportSnippet:
+            ✔ Return report information @done(20-04-26 16:33)
 
     Pages:
-
+        Statistics:
+            ✔ Allow for heatmap viewing of past month's crime @done(20-04-28 16:35)
     Other:
-        ✔ Trigger push notification on new crime @done(20-04-28 02:04)
-        ✔ Update garda active status on login/logout @done(20-04-28 02:03)
-        ✔ Add favicon @done(20-04-22 21:44)
+        ✔ Trigger push notification on new crime @done(20-04-16 02:04)
+        ✔ Update garda active status on login/logout @done(20-04-16 02:03)
+        ✔ Add favicon @done(20-04-11 21:44)
           
 Bugs:
-    ☐ Anchor point for markers is the top left of the image rather than bottom-center
 
 Main:
-    ✔ View reports by gardai number @done(20-04-28 15:53)
+    ✔ View reports by gardai number @done(20-04-15 15:53)
     
 Archive:
   ✔ Emergency button create crime on current location @done(20-04-20 22:24) @project(Client.Components.GoogleMap)

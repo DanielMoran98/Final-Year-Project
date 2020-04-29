@@ -414,10 +414,62 @@ app.post('/api/crime/create', verifyToken, (req,res) => {
         });
     }
   });
-  
 });
 
-// Marks a crime entry as resulved
+// Updates a crime entry
+app.post('/api/crime/update', verifyToken, (req,res) => {
+
+  jwt.verify(req.token, jwtSecret, (err, authData) =>{
+    if(err){
+      res.sendStatus(403)
+      }else{
+        // VERIFIED
+        id = sanitizer.sanitize(req.body.id)
+
+        console.log(req.params.crime_crime)
+        var inputData = {
+          id: sanitizer.sanitize(req.body.id),
+          latitude: sanitizer.sanitize(req.body.latitude),
+          longitude: sanitizer.sanitize(req.body.longitude),
+          crimeType: sanitizer.sanitize(req.body.crimeType),
+          crimeDescription: sanitizer.sanitize(req.body.crimeDescription),
+          suspectDescription: sanitizer.sanitize(req.body.suspectDescription),
+          victimContact: sanitizer.sanitize(req.body.victimContact),
+          urgency: sanitizer.sanitize(req.body.urgency),
+          dangers: sanitizer.sanitize(req.body.dangers),
+          division_id: sanitizer.sanitize(req.body.division_id),
+          staff_id: sanitizer.sanitize(req.body.staff_id)
+        }
+
+        console.log(inputData)
+        if(inputData.urgency == "" || typeof inputData.urgency == 'undefined'){inputData.urgency=1}
+      
+        for (const property in inputData) {
+          console.log(`${property}: ${inputData[property]}`);
+          if(inputData[property] == "" || typeof inputData[property] == 'undefined'){inputData[property]="No information provided."}
+          console.log(`${property}: ${inputData[property]}`);
+        }
+        
+        var sql = SqlString.format(`UPDATE crime SET latitude=?, longitude=?, crimeType=?, crimeDescription=?, suspectDescription=?, victimContact=?, urgency=?, dangers=?, division_id=?, staff_id=? WHERE id=?`,
+          [inputData.latitude, inputData.longitude, inputData.crimeType, inputData.crimeDescription, inputData.suspectDescription, inputData.victimContact, inputData.urgency, inputData.dangers, inputData.division_id, inputData.staff_id, inputData.id]
+         )
+        console.log(sql)
+        const db = mysql.createConnection(dbCredentials);
+        var conn = db;
+      
+        let query = db.query(sql, (err, result) => {
+          if(err) throw err;
+      
+          res.send("Success")
+          conn.end();
+        });
+    }
+  });
+});
+
+
+
+// Marks a crime entry as resolved
 app.get('/api/crime/:id/resolve', verifyToken, (req,res) => {
 
   jwt.verify(req.token, jwtSecret, (err, authData) =>{
@@ -480,7 +532,7 @@ app.post('/api/report/create', verifyToken, (req,res) => {
         let query = db.query(sql, (err, result) => {
           if(err) throw err;
       
-          res.send("Error")
+          res.send("Complete")
           conn.end();
         });  
     }
