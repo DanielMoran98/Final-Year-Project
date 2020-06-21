@@ -1,6 +1,8 @@
 # Final-Year-Project
 An Electronic Dispatch, Patrol and Resource System for Use Within an Garda Síochána
 
+The thesis I wrote alongside this project is viewable [here](https://drive.google.com/file/d/1IDuP76MezxoUATNrAi-h9LBCZ5PUUah2/view?usp=sharing).
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
