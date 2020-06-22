@@ -51,3 +51,12 @@ This project is licensed under the MIT License - see the LICENSE.md file for det
 ## Acknowledgments
 
 **Dr. Stephen Sheridan** - Project Supervisor - Lecturer @ Technological University Dublin
+
+## Screenshots
+
+<img src="https://i.imgur.com/Qb2vwvC.png" width="300" style="padding:5px">  <img src="https://i.imgur.com/HMJbOIo.png" width="300" style="padding:5px">
+<img src="https://i.imgur.com/KOfD3od.png" width="300" style="padding:5px">  <img src="https://i.imgur.com/XX7WI2W.png" width="300">
+<img src="https://i.imgur.com/0nizXJF.png" width="300" style="padding:5px">
+<img src="https://i.imgur.com/15XNEqy.png" width="700" style="padding:5px">
+
+
